@@ -38,7 +38,11 @@ public class AuthService : IAuthService
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
 
-        var token = _jwtTokenHelper.GenerateToken(user.Id, user.Username, user.Email);
+        var token = _jwtTokenHelper.GenerateToken(
+            user.Id,
+            user.Username,
+            user.Email,
+            user.Role);
         return (true, token, "Registration successful");
     }
 
@@ -51,7 +55,11 @@ public class AuthService : IAuthService
         if (!_passwordHasher.VerifyPassword(password, user.PasswordHash))
             return (false, null, "Invalid username or password");
 
-        var token = _jwtTokenHelper.GenerateToken(user.Id, user.Username, user.Email);
+        var token = _jwtTokenHelper.GenerateToken(
+            user.Id,
+            user.Username,
+            user.Email,
+            user.Role);
         return (true, token, "Login successful");
     }
 
