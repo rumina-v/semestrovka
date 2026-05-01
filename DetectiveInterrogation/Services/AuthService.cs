@@ -31,7 +31,8 @@ public class AuthService : IAuthService
         {
             Username = username,
             Email = email,
-            PasswordHash = _passwordHasher.HashPassword(password)
+            PasswordHash = _passwordHasher.HashPassword(password),
+            Role = "User"
         };
 
         _context.Users.Add(user);
