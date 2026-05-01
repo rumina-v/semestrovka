@@ -15,16 +15,21 @@ public class JwtTokenHelper
         _jwtSettings = jwtSettings;
     }
 
-    public string GenerateToken(int userId, string username, string email)
+    public string GenerateToken(int userId, string username, string email, string role)
     {
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));
-        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+        var securityKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(_jwtSettings.Secret));
+
+        var credentials = new SigningCredentials(
+            securityKey,
+            SecurityAlgorithms.HmacSha256);
 
         var claims = new[]
         {
             new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
             new Claim(ClaimTypes.Name, username),
-            new Claim(ClaimTypes.Email, email)
+            new Claim(ClaimTypes.Email, email),
+            new Claim(ClaimTypes.Role, role)
         };
 
         var token = new JwtSecurityToken(
@@ -41,20 +46,25 @@ public class JwtTokenHelper
     {
         try
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));
+            var securityKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(_jwtSettings.Secret));
+
             var handler = new JwtSecurityTokenHandler();
 
-            var principal = handler.ValidateToken(token, new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = securityKey,
-                ValidateIssuer = true,
-                ValidIssuer = _jwtSettings.Issuer,
-                ValidateAudience = true,
-                ValidAudience = _jwtSettings.Audience,
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero
-            }, out SecurityToken validatedToken);
+            var principal = handler.ValidateToken(
+                token,
+                new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = securityKey,
+                    ValidateIssuer = true,
+                    ValidIssuer = _jwtSettings.Issuer,
+                    ValidateAudience = true,
+                    ValidAudience = _jwtSettings.Audience,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                },
+                out SecurityToken validatedToken);
 
             return principal;
         }
