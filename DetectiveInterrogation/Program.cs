@@ -90,8 +90,10 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    var passwordHasher = scope.ServiceProvider.GetRequiredService<PasswordHasher>();
+
     db.Database.Migrate();
-    DbInitializer.Initialize(db);
+    DbInitializer.Initialize(db, passwordHasher);
 }
 
 // Configure the HTTP request pipeline
