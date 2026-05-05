@@ -1,0 +1,73 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\images\\backgrounds\\authorisation.png",
+      "PackagePath": "staticwebassets\\images\\backgrounds\\authorisation.png"
+    },
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\images\\backgrounds\\djeffri.png",
+      "PackagePath": "staticwebassets\\images\\backgrounds\\djeffri.png"
+    },
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\images\\backgrounds\\djeffri_interrogation.png",
+      "PackagePath": "staticwebassets\\images\\backgrounds\\djeffri_interrogation.png"
+    },
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\images\\backgrounds\\interrogation.png",
+      "PackagePath": "staticwebassets\\images\\backgrounds\\interrogation.png"
+    },
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\images\\backgrounds\\lilit.png",
+      "PackagePath": "staticwebassets\\images\\backgrounds\\lilit.png"
+    },
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\images\\backgrounds\\lilit_interrogation.png",
+      "PackagePath": "staticwebassets\\images\\backgrounds\\lilit_interrogation.png"
+    },
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\images\\backgrounds\\main.png",
+      "PackagePath": "staticwebassets\\images\\backgrounds\\main.png"
+    },
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\images\\backgrounds\\mari.png",
+      "PackagePath": "staticwebassets\\images\\backgrounds\\mari.png"
+    },
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\images\\backgrounds\\notebook.png",
+      "PackagePath": "staticwebassets\\images\\backgrounds\\notebook.png"
+    },
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\images\\backgrounds\\table.png",
+      "PackagePath": "staticwebassets\\images\\backgrounds\\table.png"
+    },
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\images\\backgrounds\\table_2.png",
+      "PackagePath": "staticwebassets\\images\\backgrounds\\table_2.png"
+    },
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\js\\app.js",
+      "PackagePath": "staticwebassets\\js\\app.js"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.DetectiveInterrogation.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.DetectiveInterrogation.props",
+      "PackagePath": "build\\DetectiveInterrogation.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.DetectiveInterrogation.props",
+      "PackagePath": "buildMultiTargeting\\DetectiveInterrogation.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.DetectiveInterrogation.props",
+      "PackagePath": "buildTransitive\\DetectiveInterrogation.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

@@ -16,7 +16,6 @@ public class SessionUsedEvidenceConfiguration : IEntityTypeConfiguration<Session
         builder.Property(sue => sue.SessionId)
             .IsRequired();
         
-        // Composite unique constraint to prevent duplicate evidence usage in session
         builder.HasIndex(sue => new { sue.SessionId, sue.EvidenceId }).IsUnique();
     }
 }

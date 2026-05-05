@@ -16,7 +16,6 @@ public class InterrogationSession
     
     public string Status { get; set; } = "InProgress";
 
-    // Navigation properties
     public Case Case { get; set; } = null!;
     public Suspect Suspect { get; set; } = null!;
     public User User { get; set; } = null!;

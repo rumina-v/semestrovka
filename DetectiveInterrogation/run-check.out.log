@@ -1,0 +1,232 @@
+[18:49:11 DBG] An 'IServiceProvider' was created for internal use by Entity Framework.
+[18:49:11 DBG] The index {'SessionId'} was not created on entity type 'SessionUsedEvidence' as the properties are already covered by the index {'SessionId', 'EvidenceId'}.
+[18:49:11 DBG] The index {'UserId'} was not created on entity type 'UserAchievement' as the properties are already covered by the index {'UserId', 'AchievementId'}.
+[18:49:11 DBG] Entity Framework Core 8.0.4 initialized 'AppDbContext' using provider 'Npgsql.EntityFrameworkCore.PostgreSQL:8.0.4+51faf6e9c9c7ef99c3e98d98a96adb8fa8ae4553' with options: None
+[18:49:11 DBG] Creating DbConnection.
+[18:49:11 DBG] Created DbConnection. (14ms).
+[18:49:11 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[18:49:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[18:49:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[18:49:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (3ms).
+[18:49:12 DBG] Creating DbCommand for 'ExecuteScalar'.
+[18:49:12 DBG] Created DbCommand for 'ExecuteScalar' (2ms).
+[18:49:12 DBG] Initialized DbCommand for 'ExecuteScalar' (6ms).
+[18:49:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[18:49:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[18:49:12 DBG] Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT CASE WHEN COUNT(*) = 0 THEN FALSE ELSE TRUE END
+FROM pg_class AS cls
+JOIN pg_namespace AS ns ON ns.oid = cls.relnamespace
+WHERE
+        cls.relkind IN ('r', 'v', 'm', 'f', 'p') AND
+        ns.nspname NOT IN ('pg_catalog', 'information_schema') AND
+        -- Exclude tables which are members of PG extensions
+        NOT EXISTS (
+            SELECT 1 FROM pg_depend WHERE
+                classid=(
+                    SELECT cls.oid
+                    FROM pg_class AS cls
+                             JOIN pg_namespace AS ns ON ns.oid = cls.relnamespace
+                    WHERE relname='pg_class' AND ns.nspname='pg_catalog'
+                ) AND
+                objid=cls.oid AND
+                deptype IN ('e', 'x')
+        )
+[18:49:12 INF] Executed DbCommand (45ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT CASE WHEN COUNT(*) = 0 THEN FALSE ELSE TRUE END
+FROM pg_class AS cls
+JOIN pg_namespace AS ns ON ns.oid = cls.relnamespace
+WHERE
+        cls.relkind IN ('r', 'v', 'm', 'f', 'p') AND
+        ns.nspname NOT IN ('pg_catalog', 'information_schema') AND
+        -- Exclude tables which are members of PG extensions
+        NOT EXISTS (
+            SELECT 1 FROM pg_depend WHERE
+                classid=(
+                    SELECT cls.oid
+                    FROM pg_class AS cls
+                             JOIN pg_namespace AS ns ON ns.oid = cls.relnamespace
+                    WHERE relname='pg_class' AND ns.nspname='pg_catalog'
+                ) AND
+                objid=cls.oid AND
+                deptype IN ('e', 'x')
+        )
+[18:49:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[18:49:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[18:49:12 DBG] Compiling query expression: 
+'DbSet<User>()
+    .Any(u => u.Username == "admin")'
+[18:49:12 DBG] Generated query execution expression: 
+'queryContext => new SingleQueryingEnumerable<bool>(
+    (RelationalQueryContext)queryContext, 
+    RelationalCommandCache.QueryExpression(
+        Projection Mapping:
+            EmptyProjectionMember -> 0
+        SELECT EXISTS (
+            SELECT 1
+            FROM Users AS u
+            WHERE u.Username == 'admin')), 
+    null, 
+    Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, bool>, 
+    DetectiveInterrogation.Data.AppDbContext, 
+    False, 
+    False, 
+    True
+)
+    .Single()'
+[18:49:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[18:49:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[18:49:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[18:49:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[18:49:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[18:49:12 DBG] Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Users" AS u
+    WHERE u."Username" = 'admin')
+[18:49:12 INF] Executed DbCommand (5ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Users" AS u
+    WHERE u."Username" = 'admin')
+[18:49:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[18:49:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 4ms reading results.
+[18:49:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[18:49:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[18:49:12 DBG] Compiling query expression: 
+'DbSet<User>()
+    .Any(u => u.Username == "player")'
+[18:49:12 DBG] Generated query execution expression: 
+'queryContext => new SingleQueryingEnumerable<bool>(
+    (RelationalQueryContext)queryContext, 
+    RelationalCommandCache.QueryExpression(
+        Projection Mapping:
+            EmptyProjectionMember -> 0
+        SELECT EXISTS (
+            SELECT 1
+            FROM Users AS u
+            WHERE u.Username == 'player')), 
+    null, 
+    Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, bool>, 
+    DetectiveInterrogation.Data.AppDbContext, 
+    False, 
+    False, 
+    True
+)
+    .Single()'
+[18:49:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[18:49:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[18:49:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[18:49:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[18:49:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[18:49:12 DBG] Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Users" AS u
+    WHERE u."Username" = 'player')
+[18:49:12 INF] Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Users" AS u
+    WHERE u."Username" = 'player')
+[18:49:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[18:49:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 0ms reading results.
+[18:49:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[18:49:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[18:49:12 DBG] Compiling query expression: 
+'DbSet<Achievement>()
+    .Any()'
+[18:49:12 DBG] Generated query execution expression: 
+'queryContext => new SingleQueryingEnumerable<bool>(
+    (RelationalQueryContext)queryContext, 
+    RelationalCommandCache.QueryExpression(
+        Projection Mapping:
+            EmptyProjectionMember -> 0
+        SELECT EXISTS (
+            SELECT 1
+            FROM Achievements AS a)), 
+    null, 
+    Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, bool>, 
+    DetectiveInterrogation.Data.AppDbContext, 
+    False, 
+    False, 
+    True
+)
+    .Single()'
+[18:49:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[18:49:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[18:49:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[18:49:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[18:49:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[18:49:12 DBG] Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Achievements" AS a)
+[18:49:12 INF] Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Achievements" AS a)
+[18:49:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[18:49:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 0ms reading results.
+[18:49:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[18:49:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[18:49:12 DBG] Compiling query expression: 
+'DbSet<Case>()
+    .Any()'
+[18:49:12 DBG] Generated query execution expression: 
+'queryContext => new SingleQueryingEnumerable<bool>(
+    (RelationalQueryContext)queryContext, 
+    RelationalCommandCache.QueryExpression(
+        Projection Mapping:
+            EmptyProjectionMember -> 0
+        SELECT EXISTS (
+            SELECT 1
+            FROM Cases AS c)), 
+    null, 
+    Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, bool>, 
+    DetectiveInterrogation.Data.AppDbContext, 
+    False, 
+    False, 
+    True
+)
+    .Single()'
+[18:49:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[18:49:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[18:49:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[18:49:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[18:49:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[18:49:12 DBG] Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Cases" AS c)
+[18:49:12 INF] Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Cases" AS c)
+[18:49:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[18:49:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 0ms reading results.
+[18:49:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[18:49:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[18:49:12 DBG] SaveChanges starting for 'AppDbContext'.
+[18:49:12 DBG] DetectChanges starting for 'AppDbContext'.
+[18:49:12 DBG] DetectChanges completed for 'AppDbContext'.
+[18:49:12 DBG] SaveChanges completed for 'AppDbContext' with 0 entities written to the database.
+[18:49:12 DBG] 'AppDbContext' disposed.
+[18:49:12 DBG] Disposing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[18:49:12 DBG] Disposed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[18:49:12 DBG] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.TryParseModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+[18:49:12 DBG] Hosting starting
+[18:49:12 DBG] Reading data from file 'C:\Users\vikto\OneDrive\Desktop\sem\DetectiveInterrogation\DataProtectionKeys\key-b1304d11-bf04-45a4-a947-21a7e0b9e88b.xml'.
+[18:49:12 DBG] Found key {b1304d11-bf04-45a4-a947-21a7e0b9e88b}.
+[18:49:12 DBG] Considering key {b1304d11-bf04-45a4-a947-21a7e0b9e88b} with expiration date 2026-08-01 07:03:01Z as default key.
+[18:49:12 DBG] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+[18:49:12 DBG] Opening CNG algorithm 'AES' from provider 'null' with chaining mode CBC.
+[18:49:12 DBG] Opening CNG algorithm 'SHA256' from provider 'null' with HMAC.
+[18:49:12 DBG] Using key {b1304d11-bf04-45a4-a947-21a7e0b9e88b} as the default key.
+[18:49:12 DBG] Key ring with default key {b1304d11-bf04-45a4-a947-21a7e0b9e88b} was loaded during application startup.
+[18:49:12 INF] Now listening on: http://localhost:5265
+[18:49:12 DBG] Loaded hosting startup assembly DetectiveInterrogation
+[18:49:12 INF] Application started. Press Ctrl+C to shut down.
+[18:49:12 INF] Hosting environment: Production
+[18:49:12 INF] Content root path: C:\Users\vikto\OneDrive\Desktop\sem\DetectiveInterrogation
+[18:49:12 DBG] Hosting started

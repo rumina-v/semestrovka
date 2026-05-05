@@ -24,7 +24,6 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // Apply all configurations
         modelBuilder.ApplyConfiguration(new Configurations.UserConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.CaseConfiguration());
         modelBuilder.ApplyConfiguration(new Configurations.SuspectConfiguration());

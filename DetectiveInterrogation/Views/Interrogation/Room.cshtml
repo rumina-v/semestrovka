@@ -1,1 +1,31 @@
+@{
+    ViewData["Title"] = "Комната допроса";
+    ViewData["PageClass"] = "interrogation";
+}
 
+<main class="interrogation-room" data-interrogation-page data-suspect-index="0">
+    <aside class="detective-notebook" data-notebook hidden>
+        <h2>Блокнот</h2>
+        <div data-phrases-list></div>
+    </aside>
+
+    <section class="suspect-zone">
+        <div class="suspect-portrait">
+            <h1 data-suspect-name>Подозреваемый</h1>
+            <p data-suspect-counter>Подозреваемый 1 из 2</p>
+        </div>
+        <button class="greeting-button" type="button" data-start-greeting>Начать приветствие</button>
+    </section>
+
+    <section class="dialogue-zone">
+        <div class="speech suspect-speech" data-suspect-speech>Подозреваемый ждёт первого вопроса.</div>
+        <div class="speech detective-speech" data-detective-speech hidden></div>
+        <div class="interrogation-state" data-state-panel hidden>
+            <span>Доверие: <strong data-trust>0</strong></span>
+            <span>Давление: <strong data-aggression>0</strong></span>
+            <span data-session-status>InProgress</span>
+        </div>
+    </section>
+
+    <div class="status room-status" data-status></div>
+</main>

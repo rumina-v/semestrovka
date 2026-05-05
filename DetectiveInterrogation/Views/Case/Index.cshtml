@@ -1,1 +1,45 @@
+@{
+    ViewData["Title"] = "Стол детектива";
+    ViewData["PageClass"] = "desk";
+}
 
+<a class="back-link light" href="javascript:history.back()" aria-label="Назад">←</a>
+
+<main class="desk-stage" data-desk-page data-desk-spread="0">
+    <section class="case-file" data-case-file data-spread="0">
+        <article class="case-cover" data-spread-panel="0">
+            <div class="case-cover-title">
+                <p>Дело № 04116</p>
+                <h1 data-desk-title>Убийство судьи</h1>
+            </div>
+            <button class="page-arrow next" type="button" data-next-page aria-label="Следующая страница">→</button>
+        </article>
+
+        <article class="case-spread" data-spread-panel="1" hidden>
+            <div class="file-page">
+                <h2>Описание дела</h2>
+                <p data-desk-description></p>
+            </div>
+            <div class="file-page">
+                <h2>Подозреваемый №1</h2>
+                <div data-suspect-one></div>
+            </div>
+            <button class="page-arrow prev" type="button" data-prev-page aria-label="Предыдущая страница">←</button>
+            <button class="page-arrow next" type="button" data-next-page aria-label="Следующая страница">→</button>
+        </article>
+
+        <article class="case-spread" data-spread-panel="2" hidden>
+            <div class="file-page">
+                <h2>Подозреваемый №2</h2>
+                <div data-suspect-two></div>
+            </div>
+            <div class="file-page">
+                <h2>Улики</h2>
+                <div class="evidence-list" data-desk-evidence></div>
+            </div>
+            <button class="page-arrow prev" type="button" data-prev-page aria-label="Предыдущая страница">←</button>
+            <button class="interrogation-entry" type="button" data-enter-interrogation>В комнату допроса</button>
+        </article>
+    </section>
+    <div class="status desk-status" data-status></div>
+</main>

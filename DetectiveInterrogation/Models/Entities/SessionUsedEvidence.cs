@@ -8,7 +8,6 @@ public class SessionUsedEvidence
     
     public int SessionId { get; set; }
 
-    // Navigation properties
     public Evidence Evidence { get; set; } = null!;
     public InterrogationSession Session { get; set; } = null!;
 }

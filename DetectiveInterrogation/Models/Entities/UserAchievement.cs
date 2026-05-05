@@ -8,7 +8,6 @@ public class UserAchievement
     
     public int AchievementId { get; set; }
 
-    // Navigation properties
     public User User { get; set; } = null!;
     public Achievement Achievement { get; set; } = null!;
 }

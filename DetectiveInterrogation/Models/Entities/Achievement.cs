@@ -8,6 +8,5 @@ public class Achievement
     
     public string? Description { get; set; }
 
-    // Navigation properties
     public ICollection<UserAchievement> UserAchievements { get; set; } = new List<UserAchievement>();
 }

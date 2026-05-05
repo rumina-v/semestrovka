@@ -12,7 +12,6 @@ public class Evidence
     
     public string? FullText { get; set; }
 
-    // Navigation properties
     public Case Case { get; set; } = null!;
     public ICollection<EvidencePhrase> Phrases { get; set; } = new List<EvidencePhrase>();
     public ICollection<SessionUsedEvidence> SessionUsedEvidences { get; set; } = new List<SessionUsedEvidence>();

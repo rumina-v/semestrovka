@@ -8,7 +8,6 @@ public class EvidencePhrase
     
     public string Text { get; set; } = string.Empty;
 
-    // Navigation properties
     public Evidence Evidence { get; set; } = null!;
     public ICollection<SuspectReply> SuspectReplies { get; set; } = new List<SuspectReply>();
 }

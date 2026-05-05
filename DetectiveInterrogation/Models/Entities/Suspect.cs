@@ -16,7 +16,6 @@ public class Suspect
     
     public bool IsGuilty { get; set; }
 
-    // Navigation properties
     public Case Case { get; set; } = null!;
     public ICollection<SuspectReply> Replies { get; set; } = new List<SuspectReply>();
     public ICollection<InterrogationSession> InterrogationSessions { get; set; } = new List<InterrogationSession>();

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\DetectiveInterrogation.csproj": {}
+    "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\DetectiveInterrogation.csproj": {}
   },
   "projects": {
-    "c:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\DetectiveInterrogation.csproj": {
+    "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\DetectiveInterrogation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\DetectiveInterrogation.csproj",
+        "projectUniqueName": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\DetectiveInterrogation.csproj",
         "projectName": "DetectiveInterrogation",
-        "projectPath": "c:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\DetectiveInterrogation.csproj",
+        "projectPath": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\DetectiveInterrogation.csproj",
         "packagesPath": "C:\\Users\\vikto\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\obj\\",
+        "outputPath": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\vikto\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -67,13 +67,13 @@
               "target": "Package",
               "version": "[8.0.4, )"
             },
-            "Microsoft.EntityFrameworkCore.SqlServer": {
-              "target": "Package",
-              "version": "[8.0.4, )"
-            },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.4, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[8.0.4, )"
             },

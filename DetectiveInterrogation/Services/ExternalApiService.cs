@@ -54,7 +54,6 @@ public class ExternalApiService : IExternalApiService
 
     public async Task<bool> ValidateExternalDataAsync(object data)
     {
-        // Implement custom validation logic here
         return await Task.FromResult(true);
     }
 }

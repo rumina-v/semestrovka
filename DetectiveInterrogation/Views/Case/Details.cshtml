@@ -1,1 +1,27 @@
+@{
+    ViewData["Title"] = "Детали дела";
+}
 
+<section class="toolbar">
+    <div>
+        <p class="eyebrow">Дело</p>
+        <h1 data-case-title>Загрузка</h1>
+    </div>
+    <a class="button secondary" href="/cases">Назад</a>
+</section>
+
+<section class="detail-layout">
+    <article class="panel">
+        <h2>Сводка</h2>
+        <p data-case-short></p>
+        <h2>Газетная заметка</h2>
+        <p data-case-newspaper></p>
+        <h2>Полное описание</h2>
+        <p data-case-full></p>
+    </article>
+    <aside class="panel">
+        <h2>Подозреваемые</h2>
+        <div class="list" data-suspects-list></div>
+    </aside>
+</section>
+<div class="status" data-status></div>

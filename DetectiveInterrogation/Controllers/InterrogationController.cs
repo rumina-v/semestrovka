@@ -65,6 +65,20 @@ public class InterrogationController : ControllerBase
         return Ok(state);
     }
 
+    [HttpGet("ending/{caseId}")]
+    public async Task<IActionResult> GetEnding(int caseId)
+    {
+        var userId = _claimsHelper.GetUserId(User);
+        if (userId == null)
+            return Unauthorized();
+
+        var ending = await _interrogationService.GetCaseEndingAsync(userId.Value, caseId);
+        if (ending == null)
+            return NotFound(new { message = "Completed interrogations not found" });
+
+        return Ok(ending);
+    }
+
     [HttpPost("end/{sessionId}")]
     public async Task<IActionResult> EndInterrogation(int sessionId)
     {

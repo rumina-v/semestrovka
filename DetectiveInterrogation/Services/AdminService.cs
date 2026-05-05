@@ -1,50 +1,42 @@
-using DetectiveInterrogation.Data;
 using DetectiveInterrogation.Models.Entities;
+using DetectiveInterrogation.Repositories.Interfaces;
 using DetectiveInterrogation.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace DetectiveInterrogation.Services;
 
 public class AdminService : IAdminService
 {
-    private readonly AppDbContext _context;
+    private readonly IUserRepository _userRepository;
+    private readonly IStatisticsRepository _statisticsRepository;
 
-    public AdminService(AppDbContext context)
+    public AdminService(IUserRepository userRepository, IStatisticsRepository statisticsRepository)
     {
-        _context = context;
+        _userRepository = userRepository;
+        _statisticsRepository = statisticsRepository;
     }
 
     public async Task<List<User>> GetAllUsersAsync()
     {
-        return await _context.Users.ToListAsync();
+        return await _userRepository.GetAllAsync();
     }
 
     public async Task<User?> GetUserByIdAsync(int userId)
     {
-        return await _context.Users
-            .Include(u => u.InterrogationSessions)
-            .Include(u => u.UserAchievements)
-            .FirstOrDefaultAsync(u => u.Id == userId);
+        return await _userRepository.GetByIdAsync(userId);
     }
 
     public async Task<bool> DeleteUserAsync(int userId)
     {
-        var user = await _context.Users.FindAsync(userId);
-        if (user == null)
-            return false;
-
-        _context.Users.Remove(user);
-        await _context.SaveChangesAsync();
-        return true;
+        return await _userRepository.DeleteAsync(userId);
     }
 
     public async Task<List<object>> GetGameStatisticsAsync()
     {
         var stats = new List<object>
         {
-            new { Label = "Total Users", Value = await _context.Users.CountAsync() },
-            new { Label = "Total Cases", Value = await _context.Cases.CountAsync() },
-            new { Label = "Total Interrogations", Value = await _context.InterrogationSessions.CountAsync() }
+            new { Label = "Total Users", Value = await _statisticsRepository.GetUsersCountAsync() },
+            new { Label = "Total Cases", Value = await _statisticsRepository.GetCasesCountAsync() },
+            new { Label = "Total Interrogations", Value = await _statisticsRepository.GetInterrogationsCountAsync() }
         };
 
         return stats;

@@ -16,7 +16,6 @@ public class UserAchievementConfiguration : IEntityTypeConfiguration<UserAchieve
         builder.Property(ua => ua.AchievementId)
             .IsRequired();
         
-        // Composite unique constraint to prevent duplicate achievements
         builder.HasIndex(ua => new { ua.UserId, ua.AchievementId }).IsUnique();
     }
 }

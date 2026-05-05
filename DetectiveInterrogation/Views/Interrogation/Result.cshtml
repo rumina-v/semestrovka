@@ -1,1 +1,29 @@
+@{
+    ViewData["Title"] = "Концовка";
+    ViewData["PageClass"] = "ending";
+}
 
+<header class="ending-top">
+    <a class="back-link" href="/" aria-label="На главную">←</a>
+    <a class="nav-button solid" href="/profile">Профиль</a>
+</header>
+
+<main class="ending-stage" data-ending-page>
+    <section class="ending-report">
+        <p>Итог</p>
+        <h1 data-ending-title>Судебное решение</h1>
+        <div data-ending-text>
+            Расследование завершено. Суд изучил материалы дела, признания и противоречия в показаниях. Полная история дела и полученные достижения будут отправлены письмом, если SMTP настроен.
+        </div>
+    </section>
+    <aside class="ending-images">
+        <figure>
+            <div class="ending-image court"></div>
+            <figcaption>Из зала суда</figcaption>
+        </figure>
+        <figure>
+            <div class="ending-image prison"></div>
+            <figcaption>Из тюрьмы</figcaption>
+        </figure>
+    </aside>
+</main>

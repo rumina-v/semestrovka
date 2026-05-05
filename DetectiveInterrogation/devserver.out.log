@@ -1,0 +1,720 @@
+[22:54:11 DBG] An 'IServiceProvider' was created for internal use by Entity Framework.
+[22:54:11 DBG] The index {'SessionId'} was not created on entity type 'SessionUsedEvidence' as the properties are already covered by the index {'SessionId', 'EvidenceId'}.
+[22:54:11 DBG] The index {'UserId'} was not created on entity type 'UserAchievement' as the properties are already covered by the index {'UserId', 'AchievementId'}.
+[22:54:11 DBG] Entity Framework Core 8.0.4 initialized 'AppDbContext' using provider 'Npgsql.EntityFrameworkCore.PostgreSQL:8.0.4+51faf6e9c9c7ef99c3e98d98a96adb8fa8ae4553' with options: None
+[22:54:11 DBG] Creating DbConnection.
+[22:54:11 DBG] Created DbConnection. (10ms).
+[22:54:11 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:11 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:11 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:11 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (2ms).
+[22:54:11 DBG] Creating DbCommand for 'ExecuteScalar'.
+[22:54:12 DBG] Created DbCommand for 'ExecuteScalar' (2ms).
+[22:54:12 DBG] Initialized DbCommand for 'ExecuteScalar' (4ms).
+[22:54:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT CASE WHEN COUNT(*) = 0 THEN FALSE ELSE TRUE END
+FROM pg_class AS cls
+JOIN pg_namespace AS ns ON ns.oid = cls.relnamespace
+WHERE
+        cls.relkind IN ('r', 'v', 'm', 'f', 'p') AND
+        ns.nspname NOT IN ('pg_catalog', 'information_schema') AND
+        -- Exclude tables which are members of PG extensions
+        NOT EXISTS (
+            SELECT 1 FROM pg_depend WHERE
+                classid=(
+                    SELECT cls.oid
+                    FROM pg_class AS cls
+                             JOIN pg_namespace AS ns ON ns.oid = cls.relnamespace
+                    WHERE relname='pg_class' AND ns.nspname='pg_catalog'
+                ) AND
+                objid=cls.oid AND
+                deptype IN ('e', 'x')
+        )
+[22:54:12 INF] Executed DbCommand (28ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT CASE WHEN COUNT(*) = 0 THEN FALSE ELSE TRUE END
+FROM pg_class AS cls
+JOIN pg_namespace AS ns ON ns.oid = cls.relnamespace
+WHERE
+        cls.relkind IN ('r', 'v', 'm', 'f', 'p') AND
+        ns.nspname NOT IN ('pg_catalog', 'information_schema') AND
+        -- Exclude tables which are members of PG extensions
+        NOT EXISTS (
+            SELECT 1 FROM pg_depend WHERE
+                classid=(
+                    SELECT cls.oid
+                    FROM pg_class AS cls
+                             JOIN pg_namespace AS ns ON ns.oid = cls.relnamespace
+                    WHERE relname='pg_class' AND ns.nspname='pg_catalog'
+                ) AND
+                objid=cls.oid AND
+                deptype IN ('e', 'x')
+        )
+[22:54:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (1ms).
+[22:54:12 DBG] Compiling query expression: 
+'DbSet<User>()
+    .Any(u => u.Username == "admin")'
+[22:54:12 DBG] Generated query execution expression: 
+'queryContext => new SingleQueryingEnumerable<bool>(
+    (RelationalQueryContext)queryContext, 
+    RelationalCommandCache.QueryExpression(
+        Projection Mapping:
+            EmptyProjectionMember -> 0
+        SELECT EXISTS (
+            SELECT 1
+            FROM Users AS u
+            WHERE u.Username == 'admin')), 
+    null, 
+    Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, bool>, 
+    DetectiveInterrogation.Data.AppDbContext, 
+    False, 
+    False, 
+    True
+)
+    .Single()'
+[22:54:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[22:54:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Users" AS u
+    WHERE u."Username" = 'admin')
+[22:54:12 INF] Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Users" AS u
+    WHERE u."Username" = 'admin')
+[22:54:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 6ms reading results.
+[22:54:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[22:54:12 DBG] Compiling query expression: 
+'DbSet<User>()
+    .Any(u => u.Username == "player")'
+[22:54:12 DBG] Generated query execution expression: 
+'queryContext => new SingleQueryingEnumerable<bool>(
+    (RelationalQueryContext)queryContext, 
+    RelationalCommandCache.QueryExpression(
+        Projection Mapping:
+            EmptyProjectionMember -> 0
+        SELECT EXISTS (
+            SELECT 1
+            FROM Users AS u
+            WHERE u.Username == 'player')), 
+    null, 
+    Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, bool>, 
+    DetectiveInterrogation.Data.AppDbContext, 
+    False, 
+    False, 
+    True
+)
+    .Single()'
+[22:54:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[22:54:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Users" AS u
+    WHERE u."Username" = 'player')
+[22:54:12 INF] Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Users" AS u
+    WHERE u."Username" = 'player')
+[22:54:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 0ms reading results.
+[22:54:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[22:54:12 DBG] Compiling query expression: 
+'DbSet<Achievement>()
+    .FirstOrDefault(a => a.Title == __title_0)'
+[22:54:12 DBG] Generated query execution expression: 
+'queryContext => new SingleQueryingEnumerable<Achievement>(
+    (RelationalQueryContext)queryContext, 
+    RelationalCommandCache.QueryExpression(
+        Projection Mapping:
+            EmptyProjectionMember -> Dictionary<IProperty, int> { [Property: Achievement.Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd, 0], [Property: Achievement.Description (string), 1], [Property: Achievement.Title (string) Required MaxLength(255), 2] }
+        SELECT TOP(1) a.Id, a.Description, a.Title
+        FROM Achievements AS a
+        WHERE a.Title == @__title_0), 
+    null, 
+    Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, Achievement>, 
+    DetectiveInterrogation.Data.AppDbContext, 
+    False, 
+    False, 
+    True
+)
+    .SingleOrDefault()'
+[22:54:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[22:54:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Initialized DbCommand for 'ExecuteReader' (1ms).
+[22:54:12 DBG] Executing DbCommand [Parameters=[@__title_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT a."Id", a."Description", a."Title"
+FROM "Achievements" AS a
+WHERE a."Title" = @__title_0
+LIMIT 1
+[22:54:12 INF] Executed DbCommand (6ms) [Parameters=[@__title_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT a."Id", a."Description", a."Title"
+FROM "Achievements" AS a
+WHERE a."Title" = @__title_0
+LIMIT 1
+[22:54:12 DBG] Context 'AppDbContext' started tracking 'Achievement' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 21ms reading results.
+[22:54:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[22:54:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[22:54:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Executing DbCommand [Parameters=[@__title_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT a."Id", a."Description", a."Title"
+FROM "Achievements" AS a
+WHERE a."Title" = @__title_0
+LIMIT 1
+[22:54:12 INF] Executed DbCommand (1ms) [Parameters=[@__title_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT a."Id", a."Description", a."Title"
+FROM "Achievements" AS a
+WHERE a."Title" = @__title_0
+LIMIT 1
+[22:54:12 DBG] Context 'AppDbContext' started tracking 'Achievement' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 0ms reading results.
+[22:54:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[22:54:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[22:54:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Executing DbCommand [Parameters=[@__title_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT a."Id", a."Description", a."Title"
+FROM "Achievements" AS a
+WHERE a."Title" = @__title_0
+LIMIT 1
+[22:54:12 INF] Executed DbCommand (1ms) [Parameters=[@__title_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT a."Id", a."Description", a."Title"
+FROM "Achievements" AS a
+WHERE a."Title" = @__title_0
+LIMIT 1
+[22:54:12 DBG] Context 'AppDbContext' started tracking 'Achievement' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 0ms reading results.
+[22:54:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[22:54:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[22:54:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Executing DbCommand [Parameters=[@__title_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT a."Id", a."Description", a."Title"
+FROM "Achievements" AS a
+WHERE a."Title" = @__title_0
+LIMIT 1
+[22:54:12 INF] Executed DbCommand (0ms) [Parameters=[@__title_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT a."Id", a."Description", a."Title"
+FROM "Achievements" AS a
+WHERE a."Title" = @__title_0
+LIMIT 1
+[22:54:12 DBG] Context 'AppDbContext' started tracking 'Achievement' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 0ms reading results.
+[22:54:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[22:54:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[22:54:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Executing DbCommand [Parameters=[@__title_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT a."Id", a."Description", a."Title"
+FROM "Achievements" AS a
+WHERE a."Title" = @__title_0
+LIMIT 1
+[22:54:12 INF] Executed DbCommand (0ms) [Parameters=[@__title_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT a."Id", a."Description", a."Title"
+FROM "Achievements" AS a
+WHERE a."Title" = @__title_0
+LIMIT 1
+[22:54:12 DBG] Context 'AppDbContext' started tracking 'Achievement' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 0ms reading results.
+[22:54:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[22:54:12 DBG] Compiling query expression: 
+'DbSet<Case>()
+    .OrderBy(c => c.Id)
+    .FirstOrDefault()'
+[22:54:12 DBG] Generated query execution expression: 
+'queryContext => new SingleQueryingEnumerable<Case>(
+    (RelationalQueryContext)queryContext, 
+    RelationalCommandCache.QueryExpression(
+        Projection Mapping:
+            EmptyProjectionMember -> Dictionary<IProperty, int> { [Property: Case.Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd, 0], [Property: Case.FullDescription (string), 1], [Property: Case.NewspaperText (string), 2], [Property: Case.ShortDescription (string), 3], [Property: Case.Title (string) Required MaxLength(255), 4] }
+        SELECT TOP(1) c.Id, c.FullDescription, c.NewspaperText, c.ShortDescription, c.Title
+        FROM Cases AS c
+        ORDER BY c.Id ASC), 
+    null, 
+    Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, Case>, 
+    DetectiveInterrogation.Data.AppDbContext, 
+    False, 
+    False, 
+    True
+)
+    .SingleOrDefault()'
+[22:54:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[22:54:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT c."Id", c."FullDescription", c."NewspaperText", c."ShortDescription", c."Title"
+FROM "Cases" AS c
+ORDER BY c."Id"
+LIMIT 1
+[22:54:12 INF] Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT c."Id", c."FullDescription", c."NewspaperText", c."ShortDescription", c."Title"
+FROM "Cases" AS c
+ORDER BY c."Id"
+LIMIT 1
+[22:54:12 DBG] Context 'AppDbContext' started tracking 'Case' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 11ms reading results.
+[22:54:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[22:54:12 DBG] SaveChanges starting for 'AppDbContext'.
+[22:54:12 DBG] DetectChanges starting for 'AppDbContext'.
+[22:54:12 DBG] DetectChanges completed for 'AppDbContext'.
+[22:54:12 DBG] SaveChanges completed for 'AppDbContext' with 0 entities written to the database.
+[22:54:12 DBG] Compiling query expression: 
+'DbSet<Suspect>()
+    .Where(s => s.CaseId == __caseEntity_Id_0)
+    .OrderBy(s => s.Id)'
+[22:54:12 DBG] Generated query execution expression: 
+'queryContext => new SingleQueryingEnumerable<Suspect>(
+    (RelationalQueryContext)queryContext, 
+    RelationalCommandCache.QueryExpression(
+        Projection Mapping:
+            EmptyProjectionMember -> Dictionary<IProperty, int> { [Property: Suspect.Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd, 0], [Property: Suspect.CaseId (int) Required FK Index, 1], [Property: Suspect.Description (string), 2], [Property: Suspect.InitialAggression (int) Required ValueGenerated.OnAdd, 3], [Property: Suspect.InitialTrust (int) Required ValueGenerated.OnAdd, 4], [Property: Suspect.IsGuilty (bool) Required, 5], [Property: Suspect.Name (string) Required MaxLength(255), 6] }
+        SELECT s.Id, s.CaseId, s.Description, s.InitialAggression, s.InitialTrust, s.IsGuilty, s.Name
+        FROM Suspects AS s
+        WHERE s.CaseId == @__caseEntity_Id_0
+        ORDER BY s.Id ASC), 
+    null, 
+    Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, Suspect>, 
+    DetectiveInterrogation.Data.AppDbContext, 
+    False, 
+    False, 
+    True
+)'
+[22:54:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[22:54:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Executing DbCommand [Parameters=[@__caseEntity_Id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT s."Id", s."CaseId", s."Description", s."InitialAggression", s."InitialTrust", s."IsGuilty", s."Name"
+FROM "Suspects" AS s
+WHERE s."CaseId" = @__caseEntity_Id_0
+ORDER BY s."Id"
+[22:54:12 INF] Executed DbCommand (2ms) [Parameters=[@__caseEntity_Id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT s."Id", s."CaseId", s."Description", s."InitialAggression", s."InitialTrust", s."IsGuilty", s."Name"
+FROM "Suspects" AS s
+WHERE s."CaseId" = @__caseEntity_Id_0
+ORDER BY s."Id"
+[22:54:12 DBG] Context 'AppDbContext' started tracking 'Suspect' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Context 'AppDbContext' started tracking 'Suspect' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 14ms reading results.
+[22:54:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[22:54:12 DBG] SaveChanges starting for 'AppDbContext'.
+[22:54:12 DBG] DetectChanges starting for 'AppDbContext'.
+[22:54:12 DBG] DetectChanges completed for 'AppDbContext'.
+[22:54:12 DBG] SaveChanges completed for 'AppDbContext' with 0 entities written to the database.
+[22:54:12 DBG] Compiling query expression: 
+'DbSet<Evidence>()
+    .Where(e => e.CaseId == __caseEntity_Id_0)
+    .OrderBy(e => e.Id)'
+[22:54:12 DBG] Generated query execution expression: 
+'queryContext => new SingleQueryingEnumerable<Evidence>(
+    (RelationalQueryContext)queryContext, 
+    RelationalCommandCache.QueryExpression(
+        Projection Mapping:
+            EmptyProjectionMember -> Dictionary<IProperty, int> { [Property: Evidence.Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd, 0], [Property: Evidence.CaseId (int) Required FK Index, 1], [Property: Evidence.FullText (string), 2], [Property: Evidence.ShortText (string), 3], [Property: Evidence.Title (string) Required MaxLength(255), 4] }
+        SELECT e.Id, e.CaseId, e.FullText, e.ShortText, e.Title
+        FROM Evidence AS e
+        WHERE e.CaseId == @__caseEntity_Id_0
+        ORDER BY e.Id ASC), 
+    null, 
+    Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, Evidence>, 
+    DetectiveInterrogation.Data.AppDbContext, 
+    False, 
+    False, 
+    True
+)'
+[22:54:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[22:54:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Executing DbCommand [Parameters=[@__caseEntity_Id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT e."Id", e."CaseId", e."FullText", e."ShortText", e."Title"
+FROM "Evidence" AS e
+WHERE e."CaseId" = @__caseEntity_Id_0
+ORDER BY e."Id"
+[22:54:12 INF] Executed DbCommand (2ms) [Parameters=[@__caseEntity_Id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT e."Id", e."CaseId", e."FullText", e."ShortText", e."Title"
+FROM "Evidence" AS e
+WHERE e."CaseId" = @__caseEntity_Id_0
+ORDER BY e."Id"
+[22:54:12 DBG] Context 'AppDbContext' started tracking 'Evidence' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Context 'AppDbContext' started tracking 'Evidence' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Context 'AppDbContext' started tracking 'Evidence' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Context 'AppDbContext' started tracking 'Evidence' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 7ms reading results.
+[22:54:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[22:54:12 DBG] SaveChanges starting for 'AppDbContext'.
+[22:54:12 DBG] DetectChanges starting for 'AppDbContext'.
+[22:54:12 DBG] DetectChanges completed for 'AppDbContext'.
+[22:54:12 DBG] SaveChanges completed for 'AppDbContext' with 0 entities written to the database.
+[22:54:12 DBG] Compiling query expression: 
+'DbSet<EvidencePhrase>()
+    .Where(p => p.EvidenceId == __evidenceItem_Id_0)
+    .OrderBy(p => p.Id)
+    .FirstOrDefault()'
+[22:54:12 DBG] Generated query execution expression: 
+'queryContext => new SingleQueryingEnumerable<EvidencePhrase>(
+    (RelationalQueryContext)queryContext, 
+    RelationalCommandCache.QueryExpression(
+        Projection Mapping:
+            EmptyProjectionMember -> Dictionary<IProperty, int> { [Property: EvidencePhrase.Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd, 0], [Property: EvidencePhrase.EvidenceId (int) Required FK Index, 1], [Property: EvidencePhrase.Text (string) Required, 2] }
+        SELECT TOP(1) e.Id, e.EvidenceId, e.Text
+        FROM EvidencePhrases AS e
+        WHERE e.EvidenceId == @__evidenceItem_Id_0
+        ORDER BY e.Id ASC), 
+    null, 
+    Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, EvidencePhrase>, 
+    DetectiveInterrogation.Data.AppDbContext, 
+    False, 
+    False, 
+    True
+)
+    .SingleOrDefault()'
+[22:54:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[22:54:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Executing DbCommand [Parameters=[@__evidenceItem_Id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT e."Id", e."EvidenceId", e."Text"
+FROM "EvidencePhrases" AS e
+WHERE e."EvidenceId" = @__evidenceItem_Id_0
+ORDER BY e."Id"
+LIMIT 1
+[22:54:12 INF] Executed DbCommand (2ms) [Parameters=[@__evidenceItem_Id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT e."Id", e."EvidenceId", e."Text"
+FROM "EvidencePhrases" AS e
+WHERE e."EvidenceId" = @__evidenceItem_Id_0
+ORDER BY e."Id"
+LIMIT 1
+[22:54:12 DBG] Context 'AppDbContext' started tracking 'EvidencePhrase' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 4ms reading results.
+[22:54:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[22:54:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[22:54:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Executing DbCommand [Parameters=[@__evidenceItem_Id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT e."Id", e."EvidenceId", e."Text"
+FROM "EvidencePhrases" AS e
+WHERE e."EvidenceId" = @__evidenceItem_Id_0
+ORDER BY e."Id"
+LIMIT 1
+[22:54:12 INF] Executed DbCommand (1ms) [Parameters=[@__evidenceItem_Id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT e."Id", e."EvidenceId", e."Text"
+FROM "EvidencePhrases" AS e
+WHERE e."EvidenceId" = @__evidenceItem_Id_0
+ORDER BY e."Id"
+LIMIT 1
+[22:54:12 DBG] Context 'AppDbContext' started tracking 'EvidencePhrase' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 0ms reading results.
+[22:54:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[22:54:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[22:54:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Executing DbCommand [Parameters=[@__evidenceItem_Id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT e."Id", e."EvidenceId", e."Text"
+FROM "EvidencePhrases" AS e
+WHERE e."EvidenceId" = @__evidenceItem_Id_0
+ORDER BY e."Id"
+LIMIT 1
+[22:54:12 INF] Executed DbCommand (1ms) [Parameters=[@__evidenceItem_Id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT e."Id", e."EvidenceId", e."Text"
+FROM "EvidencePhrases" AS e
+WHERE e."EvidenceId" = @__evidenceItem_Id_0
+ORDER BY e."Id"
+LIMIT 1
+[22:54:12 DBG] Context 'AppDbContext' started tracking 'EvidencePhrase' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 0ms reading results.
+[22:54:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[22:54:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[22:54:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Executing DbCommand [Parameters=[@__evidenceItem_Id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT e."Id", e."EvidenceId", e."Text"
+FROM "EvidencePhrases" AS e
+WHERE e."EvidenceId" = @__evidenceItem_Id_0
+ORDER BY e."Id"
+LIMIT 1
+[22:54:12 INF] Executed DbCommand (1ms) [Parameters=[@__evidenceItem_Id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT e."Id", e."EvidenceId", e."Text"
+FROM "EvidencePhrases" AS e
+WHERE e."EvidenceId" = @__evidenceItem_Id_0
+ORDER BY e."Id"
+LIMIT 1
+[22:54:12 DBG] Context 'AppDbContext' started tracking 'EvidencePhrase' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 0ms reading results.
+[22:54:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[22:54:12 DBG] SaveChanges starting for 'AppDbContext'.
+[22:54:12 DBG] DetectChanges starting for 'AppDbContext'.
+[22:54:12 DBG] DetectChanges completed for 'AppDbContext'.
+[22:54:12 DBG] SaveChanges completed for 'AppDbContext' with 0 entities written to the database.
+[22:54:12 DBG] Compiling query expression: 
+'DbSet<SuspectReply>()
+    .FirstOrDefault(r => r.SuspectId == __suspect_Id_0 && r.PhraseId == __phrase_Id_1)'
+[22:54:12 DBG] Generated query execution expression: 
+'queryContext => new SingleQueryingEnumerable<SuspectReply>(
+    (RelationalQueryContext)queryContext, 
+    RelationalCommandCache.QueryExpression(
+        Projection Mapping:
+            EmptyProjectionMember -> Dictionary<IProperty, int> { [Property: SuspectReply.Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd, 0], [Property: SuspectReply.AggressionChange (int) Required ValueGenerated.OnAdd, 1], [Property: SuspectReply.PhraseId (int) Required FK Index, 2], [Property: SuspectReply.ReplyText (string) Required, 3], [Property: SuspectReply.SuspectId (int) Required FK Index, 4], [Property: SuspectReply.TrustChange (int) Required ValueGenerated.OnAdd, 5] }
+        SELECT TOP(1) s.Id, s.AggressionChange, s.PhraseId, s.ReplyText, s.SuspectId, s.TrustChange
+        FROM SuspectReplies AS s
+        WHERE (s.SuspectId == @__suspect_Id_0) && (s.PhraseId == @__phrase_Id_1)), 
+    null, 
+    Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, SuspectReply>, 
+    DetectiveInterrogation.Data.AppDbContext, 
+    False, 
+    False, 
+    True
+)
+    .SingleOrDefault()'
+[22:54:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[22:54:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Executing DbCommand [Parameters=[@__suspect_Id_0='?' (DbType = Int32), @__phrase_Id_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT s."Id", s."AggressionChange", s."PhraseId", s."ReplyText", s."SuspectId", s."TrustChange"
+FROM "SuspectReplies" AS s
+WHERE s."SuspectId" = @__suspect_Id_0 AND s."PhraseId" = @__phrase_Id_1
+LIMIT 1
+[22:54:12 INF] Executed DbCommand (2ms) [Parameters=[@__suspect_Id_0='?' (DbType = Int32), @__phrase_Id_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT s."Id", s."AggressionChange", s."PhraseId", s."ReplyText", s."SuspectId", s."TrustChange"
+FROM "SuspectReplies" AS s
+WHERE s."SuspectId" = @__suspect_Id_0 AND s."PhraseId" = @__phrase_Id_1
+LIMIT 1
+[22:54:12 DBG] The navigation 'SuspectReply.Suspect' was detected as changed. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Context 'AppDbContext' started tracking 'SuspectReply' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 7ms reading results.
+[22:54:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[22:54:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[22:54:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Executing DbCommand [Parameters=[@__suspect_Id_0='?' (DbType = Int32), @__phrase_Id_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT s."Id", s."AggressionChange", s."PhraseId", s."ReplyText", s."SuspectId", s."TrustChange"
+FROM "SuspectReplies" AS s
+WHERE s."SuspectId" = @__suspect_Id_0 AND s."PhraseId" = @__phrase_Id_1
+LIMIT 1
+[22:54:12 INF] Executed DbCommand (1ms) [Parameters=[@__suspect_Id_0='?' (DbType = Int32), @__phrase_Id_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT s."Id", s."AggressionChange", s."PhraseId", s."ReplyText", s."SuspectId", s."TrustChange"
+FROM "SuspectReplies" AS s
+WHERE s."SuspectId" = @__suspect_Id_0 AND s."PhraseId" = @__phrase_Id_1
+LIMIT 1
+[22:54:12 DBG] The navigation 'SuspectReply.Suspect' was detected as changed. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Context 'AppDbContext' started tracking 'SuspectReply' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 0ms reading results.
+[22:54:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[22:54:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[22:54:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Executing DbCommand [Parameters=[@__suspect_Id_0='?' (DbType = Int32), @__phrase_Id_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT s."Id", s."AggressionChange", s."PhraseId", s."ReplyText", s."SuspectId", s."TrustChange"
+FROM "SuspectReplies" AS s
+WHERE s."SuspectId" = @__suspect_Id_0 AND s."PhraseId" = @__phrase_Id_1
+LIMIT 1
+[22:54:12 INF] Executed DbCommand (0ms) [Parameters=[@__suspect_Id_0='?' (DbType = Int32), @__phrase_Id_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT s."Id", s."AggressionChange", s."PhraseId", s."ReplyText", s."SuspectId", s."TrustChange"
+FROM "SuspectReplies" AS s
+WHERE s."SuspectId" = @__suspect_Id_0 AND s."PhraseId" = @__phrase_Id_1
+LIMIT 1
+[22:54:12 DBG] The navigation 'SuspectReply.Suspect' was detected as changed. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Context 'AppDbContext' started tracking 'SuspectReply' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 0ms reading results.
+[22:54:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[22:54:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[22:54:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Executing DbCommand [Parameters=[@__suspect_Id_0='?' (DbType = Int32), @__phrase_Id_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT s."Id", s."AggressionChange", s."PhraseId", s."ReplyText", s."SuspectId", s."TrustChange"
+FROM "SuspectReplies" AS s
+WHERE s."SuspectId" = @__suspect_Id_0 AND s."PhraseId" = @__phrase_Id_1
+LIMIT 1
+[22:54:12 INF] Executed DbCommand (0ms) [Parameters=[@__suspect_Id_0='?' (DbType = Int32), @__phrase_Id_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT s."Id", s."AggressionChange", s."PhraseId", s."ReplyText", s."SuspectId", s."TrustChange"
+FROM "SuspectReplies" AS s
+WHERE s."SuspectId" = @__suspect_Id_0 AND s."PhraseId" = @__phrase_Id_1
+LIMIT 1
+[22:54:12 DBG] The navigation 'SuspectReply.Suspect' was detected as changed. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Context 'AppDbContext' started tracking 'SuspectReply' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 0ms reading results.
+[22:54:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[22:54:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[22:54:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Executing DbCommand [Parameters=[@__suspect_Id_0='?' (DbType = Int32), @__phrase_Id_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT s."Id", s."AggressionChange", s."PhraseId", s."ReplyText", s."SuspectId", s."TrustChange"
+FROM "SuspectReplies" AS s
+WHERE s."SuspectId" = @__suspect_Id_0 AND s."PhraseId" = @__phrase_Id_1
+LIMIT 1
+[22:54:12 INF] Executed DbCommand (1ms) [Parameters=[@__suspect_Id_0='?' (DbType = Int32), @__phrase_Id_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT s."Id", s."AggressionChange", s."PhraseId", s."ReplyText", s."SuspectId", s."TrustChange"
+FROM "SuspectReplies" AS s
+WHERE s."SuspectId" = @__suspect_Id_0 AND s."PhraseId" = @__phrase_Id_1
+LIMIT 1
+[22:54:12 DBG] The navigation 'SuspectReply.Suspect' was detected as changed. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Context 'AppDbContext' started tracking 'SuspectReply' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 0ms reading results.
+[22:54:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[22:54:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[22:54:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Executing DbCommand [Parameters=[@__suspect_Id_0='?' (DbType = Int32), @__phrase_Id_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT s."Id", s."AggressionChange", s."PhraseId", s."ReplyText", s."SuspectId", s."TrustChange"
+FROM "SuspectReplies" AS s
+WHERE s."SuspectId" = @__suspect_Id_0 AND s."PhraseId" = @__phrase_Id_1
+LIMIT 1
+[22:54:12 INF] Executed DbCommand (1ms) [Parameters=[@__suspect_Id_0='?' (DbType = Int32), @__phrase_Id_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT s."Id", s."AggressionChange", s."PhraseId", s."ReplyText", s."SuspectId", s."TrustChange"
+FROM "SuspectReplies" AS s
+WHERE s."SuspectId" = @__suspect_Id_0 AND s."PhraseId" = @__phrase_Id_1
+LIMIT 1
+[22:54:12 DBG] The navigation 'SuspectReply.Suspect' was detected as changed. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Context 'AppDbContext' started tracking 'SuspectReply' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 2ms reading results.
+[22:54:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[22:54:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[22:54:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Executing DbCommand [Parameters=[@__suspect_Id_0='?' (DbType = Int32), @__phrase_Id_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT s."Id", s."AggressionChange", s."PhraseId", s."ReplyText", s."SuspectId", s."TrustChange"
+FROM "SuspectReplies" AS s
+WHERE s."SuspectId" = @__suspect_Id_0 AND s."PhraseId" = @__phrase_Id_1
+LIMIT 1
+[22:54:12 INF] Executed DbCommand (1ms) [Parameters=[@__suspect_Id_0='?' (DbType = Int32), @__phrase_Id_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT s."Id", s."AggressionChange", s."PhraseId", s."ReplyText", s."SuspectId", s."TrustChange"
+FROM "SuspectReplies" AS s
+WHERE s."SuspectId" = @__suspect_Id_0 AND s."PhraseId" = @__phrase_Id_1
+LIMIT 1
+[22:54:12 DBG] The navigation 'SuspectReply.Suspect' was detected as changed. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Context 'AppDbContext' started tracking 'SuspectReply' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 0ms reading results.
+[22:54:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[22:54:12 DBG] Opening connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Opened connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Creating DbCommand for 'ExecuteReader'.
+[22:54:12 DBG] Created DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+[22:54:12 DBG] Executing DbCommand [Parameters=[@__suspect_Id_0='?' (DbType = Int32), @__phrase_Id_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT s."Id", s."AggressionChange", s."PhraseId", s."ReplyText", s."SuspectId", s."TrustChange"
+FROM "SuspectReplies" AS s
+WHERE s."SuspectId" = @__suspect_Id_0 AND s."PhraseId" = @__phrase_Id_1
+LIMIT 1
+[22:54:12 INF] Executed DbCommand (1ms) [Parameters=[@__suspect_Id_0='?' (DbType = Int32), @__phrase_Id_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT s."Id", s."AggressionChange", s."PhraseId", s."ReplyText", s."SuspectId", s."TrustChange"
+FROM "SuspectReplies" AS s
+WHERE s."SuspectId" = @__suspect_Id_0 AND s."PhraseId" = @__phrase_Id_1
+LIMIT 1
+[22:54:12 DBG] The navigation 'SuspectReply.Suspect' was detected as changed. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Context 'AppDbContext' started tracking 'SuspectReply' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+[22:54:12 DBG] Closing data reader to 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] A data reader for 'DetectiveInterrogation' on server 'tcp://localhost:5432' is being disposed after spending 0ms reading results.
+[22:54:12 DBG] Closing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Closed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[22:54:12 DBG] SaveChanges starting for 'AppDbContext'.
+[22:54:12 DBG] DetectChanges starting for 'AppDbContext'.
+[22:54:12 DBG] DetectChanges completed for 'AppDbContext'.
+[22:54:12 DBG] SaveChanges completed for 'AppDbContext' with 0 entities written to the database.
+[22:54:12 DBG] 'AppDbContext' disposed.
+[22:54:12 DBG] Disposing connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432'.
+[22:54:12 DBG] Disposed connection to database 'DetectiveInterrogation' on server 'tcp://localhost:5432' (0ms).
+[22:54:12 DBG] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.TryParseModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider", "Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+[22:54:12 DBG] Hosting starting
+[22:54:12 DBG] Reading data from file 'C:\Users\vikto\OneDrive\Desktop\sem\DetectiveInterrogation\DataProtectionKeys\key-b1304d11-bf04-45a4-a947-21a7e0b9e88b.xml'.
+[22:54:12 DBG] Found key {b1304d11-bf04-45a4-a947-21a7e0b9e88b}.
+[22:54:12 DBG] Considering key {b1304d11-bf04-45a4-a947-21a7e0b9e88b} with expiration date 2026-08-01 07:03:01Z as default key.
+[22:54:12 DBG] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+[22:54:12 DBG] Opening CNG algorithm 'AES' from provider 'null' with chaining mode CBC.
+[22:54:12 DBG] Opening CNG algorithm 'SHA256' from provider 'null' with HMAC.
+[22:54:12 DBG] Using key {b1304d11-bf04-45a4-a947-21a7e0b9e88b} as the default key.
+[22:54:12 DBG] Key ring with default key {b1304d11-bf04-45a4-a947-21a7e0b9e88b} was loaded during application startup.
+[22:54:12 INF] Now listening on: http://localhost:5077
+[22:54:12 DBG] Loaded hosting startup assembly DetectiveInterrogation
+[22:54:12 INF] Application started. Press Ctrl+C to shut down.
+[22:54:12 INF] Hosting environment: Production
+[22:54:12 INF] Content root path: C:\Users\vikto\OneDrive\Desktop\sem\DetectiveInterrogation
+[22:54:12 DBG] Hosting started

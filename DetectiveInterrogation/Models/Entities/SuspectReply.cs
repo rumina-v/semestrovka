@@ -14,7 +14,6 @@ public class SuspectReply
     
     public int AggressionChange { get; set; } = 0;
 
-    // Navigation properties
     public Suspect Suspect { get; set; } = null!;
     public EvidencePhrase Phrase { get; set; } = null!;
 }

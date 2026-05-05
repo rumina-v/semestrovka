@@ -1,41 +1,37 @@
-using DetectiveInterrogation.Data;
 using DetectiveInterrogation.Models.Entities;
+using DetectiveInterrogation.Repositories.Interfaces;
 using DetectiveInterrogation.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace DetectiveInterrogation.Services;
 
 public class AchievementService : IAchievementService
 {
-    private readonly AppDbContext _context;
+    private readonly IAchievementRepository _achievementRepository;
 
-    public AchievementService(AppDbContext context)
+    public AchievementService(IAchievementRepository achievementRepository)
     {
-        _context = context;
+        _achievementRepository = achievementRepository;
     }
 
     public async Task<List<Achievement>> GetAllAchievementsAsync()
     {
-        return await _context.Achievements.ToListAsync();
+        return await _achievementRepository.GetAllAsync();
     }
 
     public async Task<Achievement?> GetAchievementByIdAsync(int achievementId)
     {
-        return await _context.Achievements.FindAsync(achievementId);
+        return await _achievementRepository.GetByIdAsync(achievementId);
     }
 
     public async Task<List<Achievement>> GetUserAchievementsAsync(int userId)
     {
-        return await _context.UserAchievements
-            .Where(ua => ua.UserId == userId)
-            .Select(ua => ua.Achievement)
-            .ToListAsync();
+        return await _achievementRepository.GetByUserIdAsync(userId);
     }
 
     public async Task<bool> AwardAchievementAsync(int userId, int achievementId)
     {
-        if (await _context.UserAchievements.AnyAsync(ua => ua.UserId == userId && ua.AchievementId == achievementId))
-            return false; // Already awarded
+        if (await _achievementRepository.UserHasAchievementAsync(userId, achievementId))
+            return false;
 
         var userAchievement = new UserAchievement
         {
@@ -43,13 +39,12 @@ public class AchievementService : IAchievementService
             AchievementId = achievementId
         };
 
-        _context.UserAchievements.Add(userAchievement);
-        await _context.SaveChangesAsync();
+        await _achievementRepository.AddUserAchievementAsync(userAchievement);
         return true;
     }
 
     public async Task<bool> HasAchievementAsync(int userId, int achievementId)
     {
-        return await _context.UserAchievements.AnyAsync(ua => ua.UserId == userId && ua.AchievementId == achievementId);
+        return await _achievementRepository.UserHasAchievementAsync(userId, achievementId);
     }
 }

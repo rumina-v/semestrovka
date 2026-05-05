@@ -1,34 +1,26 @@
-using DetectiveInterrogation.Data;
 using DetectiveInterrogation.Models.Entities;
+using DetectiveInterrogation.Repositories.Interfaces;
 using DetectiveInterrogation.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace DetectiveInterrogation.Services;
 
 public class CaseService : ICaseService
 {
-    private readonly AppDbContext _context;
+    private readonly ICaseRepository _caseRepository;
 
-    public CaseService(AppDbContext context)
+    public CaseService(ICaseRepository caseRepository)
     {
-        _context = context;
+        _caseRepository = caseRepository;
     }
 
     public async Task<List<Case>> GetAllCasesAsync()
     {
-        return await _context.Cases
-            .Include(c => c.Suspects)
-            .Include(c => c.Evidence)
-            .ToListAsync();
+        return await _caseRepository.GetAllAsync();
     }
 
     public async Task<Case?> GetCaseByIdAsync(int caseId)
     {
-        return await _context.Cases
-            .Include(c => c.Suspects)
-            .Include(c => c.Evidence)
-                .ThenInclude(e => e.Phrases)
-            .FirstOrDefaultAsync(c => c.Id == caseId);
+        return await _caseRepository.GetByIdAsync(caseId);
     }
 
     public async Task<Case> CreateCaseAsync(string title, string? newspaperText, string? shortDescription, string? fullDescription)
@@ -41,34 +33,17 @@ public class CaseService : ICaseService
             FullDescription = fullDescription
         };
 
-        _context.Cases.Add(caseEntity);
-        await _context.SaveChangesAsync();
+        await _caseRepository.AddAsync(caseEntity);
         return caseEntity;
     }
 
     public async Task<bool> UpdateCaseAsync(int caseId, string title, string? newspaperText, string? shortDescription, string? fullDescription)
     {
-        var caseEntity = await _context.Cases.FindAsync(caseId);
-        if (caseEntity == null)
-            return false;
-
-        caseEntity.Title = title;
-        caseEntity.NewspaperText = newspaperText;
-        caseEntity.ShortDescription = shortDescription;
-        caseEntity.FullDescription = fullDescription;
-
-        await _context.SaveChangesAsync();
-        return true;
+        return await _caseRepository.UpdateAsync(caseId, title, newspaperText, shortDescription, fullDescription);
     }
 
     public async Task<bool> DeleteCaseAsync(int caseId)
     {
-        var caseEntity = await _context.Cases.FindAsync(caseId);
-        if (caseEntity == null)
-            return false;
-
-        _context.Cases.Remove(caseEntity);
-        await _context.SaveChangesAsync();
-        return true;
+        return await _caseRepository.DeleteAsync(caseId);
     }
 }

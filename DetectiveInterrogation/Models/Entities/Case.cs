@@ -12,7 +12,6 @@ public class Case
     
     public string? FullDescription { get; set; }
 
-    // Navigation properties
     public ICollection<Suspect> Suspects { get; set; } = new List<Suspect>();
     public ICollection<Evidence> Evidence { get; set; } = new List<Evidence>();
     public ICollection<InterrogationSession> InterrogationSessions { get; set; } = new List<InterrogationSession>();

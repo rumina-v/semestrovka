@@ -1,1 +1,20 @@
+@{
+    ViewData["Title"] = "Главная";
+    ViewData["PageClass"] = "home";
+}
 
+<header class="topbar">
+    <a class="brand" href="/">Detective Interrogation</a>
+    <nav class="top-actions" data-home-nav>
+        <a class="nav-button" href="/auth/login" data-guest-only>Авторизация</a>
+        <a class="nav-button solid" href="/auth/register" data-guest-only>Регистрация</a>
+        <a class="nav-button solid" href="/profile" data-auth-only hidden>Профиль</a>
+    </nav>
+</header>
+
+<main class="newspaper-stage" data-home-page>
+    <article class="home-action-panel">
+        <button class="investigate-button" type="button" data-investigate>Расследовать</button>
+        <div class="status" data-status></div>
+    </article>
+</main>
