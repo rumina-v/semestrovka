@@ -378,15 +378,14 @@ input {
 }
 
 .file-page p,
-.suspect-card,
+.suspect-text,
 .evidence-list {
     line-height: 1.65;
     font-size: 18px;
 }
 
-.suspect-card {
-    display: grid;
-    gap: 10px;
+.suspect-text p {
+    margin: 0 0 14px;
 }
 
 .evidence-list {
@@ -446,10 +445,10 @@ input {
     position: relative;
     min-height: 100vh;
     display: grid;
-    grid-template-columns: 320px 1fr 360px;
+    grid-template-columns: 520px 1fr 400px;
     gap: 24px;
     align-items: center;
-    padding: 86px 38px 42px;
+    padding: 86px 28px 42px;
     background:
         radial-gradient(circle at 50% 28%, rgba(244, 226, 188, 0.14), transparent 26%),
         linear-gradient(135deg, #17100e, #342016 58%, #120c0a);
@@ -458,14 +457,10 @@ input {
 .detective-notebook {
     min-height: 520px;
     padding: 24px;
-    background: #f0dfba;
-    border: 1px solid rgba(36, 24, 16, 0.28);
-    border-radius: 6px;
-    box-shadow: var(--shadow);
-}
-
-.detective-notebook h2 {
-    margin: 0 0 18px;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
 }
 
 .phrase-button {
@@ -900,7 +895,6 @@ body[data-page="ending"] {
 
 .file-page,
 .evidence-item,
-.suspect-card,
 .profile-field,
 .achievement-item,
 .admin-row,
@@ -947,23 +941,46 @@ body[data-page="ending"] {
 }
 
 .detective-notebook {
-    background:
-        linear-gradient(rgba(246, 236, 214, 0.2), rgba(246, 236, 214, 0.42)),
-        url("../images/backgrounds/notebook.png") center / cover no-repeat;
-    border-color: rgba(255, 246, 225, 0.46);
-    box-shadow: 0 18px 62px rgba(0, 0, 0, 0.42);
+    width: min(540px, 100%);
+    min-height: 780px;
+    padding: 122px 78px 82px 116px;
+    background: transparent url("../images/backgrounds/notebook.png?v=20260506-2") center / contain no-repeat;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    isolation: isolate;
+    align-self: stretch;
+    justify-self: start;
+    display: flex;
+    align-items: flex-start;
 }
 
 .notebook-group {
-    padding: 10px;
-    margin-bottom: 12px;
-    background: rgba(255, 248, 232, 0.52);
-    border: 1px solid rgba(69, 42, 24, 0.18);
-    border-radius: 4px;
+    width: min(320px, 100%);
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
 }
 
 .phrase-button {
-    background: rgba(255, 248, 232, 0.72);
+    margin-bottom: 8px;
+    padding: 6px 4px;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid rgba(54, 36, 22, 0.28);
+    border-radius: 0;
+    color: #24170f;
+    font-size: 0.88rem;
+    line-height: 1.35;
+    overflow-wrap: break-word;
+    word-break: normal;
+}
+
+.phrase-button:hover {
+    background: rgba(255, 248, 232, 0.28);
+    border-bottom-color: var(--accent);
 }
 
 .suspect-portrait {
@@ -1048,6 +1065,8 @@ body[data-page="ending"] {
     }
 
     .detective-notebook {
-        min-height: auto;
+        width: min(500px, 92vw);
+        min-height: 680px;
+        padding: 108px 70px 76px 96px;
     }
 }

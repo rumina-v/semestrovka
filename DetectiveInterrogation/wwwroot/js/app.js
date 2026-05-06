@@ -161,11 +161,11 @@ async function loadDesk() {
         sessionStorage.setItem(caseKey, JSON.stringify(item));
 
         document.querySelector("[data-desk-title]").textContent = item.title || "Убийство судьи";
-        document.querySelector("[data-desk-description]").textContent = item.fullDescription || item.shortDescription || "Материалы дела пока не заполнены.";
+        document.querySelector("[data-desk-description]").textContent = item.shortDescription || "Материалы дела пока не заполнены.";
 
         const suspects = item.suspects || [];
-        renderSuspect("[data-suspect-one]", suspects[0], "Подозреваемый №1 не найден.");
-        renderSuspect("[data-suspect-two]", suspects[1], "Подозреваемый №2 не найден.");
+        renderSuspect("[data-suspect-one]", "[data-suspect-one-title]", suspects[0], "Подозреваемый №1 не найден.");
+        renderSuspect("[data-suspect-two]", "[data-suspect-two-title]", suspects[1], "Подозреваемый №2 не найден.");
 
         const evidence = item.evidence || [];
         document.querySelector("[data-desk-evidence]").innerHTML = evidence.length
@@ -176,20 +176,36 @@ async function loadDesk() {
     }
 }
 
-function renderSuspect(selector, suspect, fallback) {
+function renderSuspect(selector, titleSelector, suspect, fallback) {
     const root = document.querySelector(selector);
+    const title = document.querySelector(titleSelector);
     if (!root) return;
     if (!suspect) {
+        if (title) title.textContent = "Подозреваемый";
         root.innerHTML = `<p>${fallback}</p>`;
         return;
     }
 
-    root.innerHTML = `
-        <div class="suspect-card">
-            <strong>${html(suspect.name)}</strong>
-            <p>${html(suspect.description || "Описание отсутствует.")}</p>
-        </div>
-    `;
+    const description = suspect.description || "Описание отсутствует.";
+    const firstSentenceMatch = description.match(/^(.+?\.)\s*/s);
+    const heading = firstSentenceMatch ? firstSentenceMatch[1].replace(/\.$/, "") : suspect.name;
+    const body = firstSentenceMatch ? description.slice(firstSentenceMatch[0].length).trim() : description;
+
+    if (title) {
+        title.textContent = heading;
+    }
+
+    root.innerHTML = `<div class="suspect-text">${formatText(body || description)}</div>`;
+}
+
+function formatText(value) {
+    const text = value || "";
+    return text
+        .split(/\n{2,}/)
+        .map(part => part.trim())
+        .filter(Boolean)
+        .map(part => `<p>${html(part)}</p>`)
+        .join("");
 }
 
 function showDeskSpread(index) {
@@ -288,7 +304,6 @@ function setCurrentSuspect(index) {
     document.querySelector("[data-suspect-speech]").textContent = "Подозреваемый молча ждёт начала разговора.";
     document.querySelector("[data-detective-speech]").hidden = true;
     document.querySelector("[data-notebook]").hidden = true;
-    document.querySelector("[data-state-panel]").hidden = true;
     document.querySelector("[data-start-greeting]").hidden = false;
     document.querySelector("[data-start-greeting]").textContent = "Начать приветствие";
     status("");
@@ -308,7 +323,6 @@ async function startCurrentSuspect() {
     const detectiveSpeech = document.querySelector("[data-detective-speech]");
     const suspectSpeech = document.querySelector("[data-suspect-speech]");
     const notebook = document.querySelector("[data-notebook]");
-    const statePanel = document.querySelector("[data-state-panel]");
 
     suspectSpeech.textContent = greeting.suspect;
     detectiveSpeech.hidden = false;
@@ -334,7 +348,6 @@ async function startCurrentSuspect() {
         }
 
         notebook.hidden = false;
-        statePanel.hidden = false;
         renderState(session);
         await loadPhrases(session.id);
         status("");
@@ -345,9 +358,11 @@ async function startCurrentSuspect() {
 }
 
 function renderState(state) {
-    document.querySelector("[data-trust]").textContent = state.currentTrust ?? 0;
-    document.querySelector("[data-aggression]").textContent = state.currentAggression ?? 0;
-    document.querySelector("[data-session-status]").textContent = state.status || "InProgress";
+    interrogation.state = {
+        currentTrust: state.currentTrust ?? 0,
+        currentAggression: state.currentAggression ?? 0,
+        status: state.status || "InProgress"
+    };
 }
 
 async function loadPhrases(sessionId) {
@@ -367,13 +382,12 @@ async function loadPhrases(sessionId) {
     });
 
     root.innerHTML = Array.from(groups.values()).map(group => {
-        const evidenceTitle = group[0].evidenceTitle || "Улика";
         const phraseButtons = group.map(phrase => `
             <button class="phrase-button" type="button" data-phrase-id="${phrase.id}">
                 ${html(phrase.text)}
             </button>
         `).join("");
-        return `<div class="notebook-group"><strong>${html(evidenceTitle)}</strong>${phraseButtons}</div>`;
+        return `<div class="notebook-group">${phraseButtons}</div>`;
     }).join("");
 }
 
