@@ -120,6 +120,13 @@ input {
     border-color: rgba(246, 234, 210, 0.7);
 }
 
+.ending-profile-link {
+    position: fixed;
+    top: 22px;
+    right: 22px;
+    z-index: 30;
+}
+
 .newspaper-stage {
     position: relative;
     min-height: 100vh;
@@ -515,6 +522,10 @@ input {
 .suspect-portrait p {
     margin: 8px 0 0;
     color: #d9c6a7;
+}
+
+.interrogation-room[data-phase="active"] .suspect-portrait {
+    visibility: hidden;
 }
 
 .dialogue-zone {
@@ -931,19 +942,20 @@ body[data-page="ending"] {
 .interrogation-room {
     background:
         linear-gradient(rgba(5, 4, 4, 0.08), rgba(5, 4, 4, 0.26)),
-        url("../images/backgrounds/lilit_interrogation.png") center / cover no-repeat;
+        url("../images/backgrounds/djeffri_interrogation.png") center / cover no-repeat;
 }
 
 .interrogation-room[data-suspect-index="1"] {
     background:
         linear-gradient(rgba(5, 4, 4, 0.08), rgba(5, 4, 4, 0.26)),
-        url("../images/backgrounds/djeffri_interrogation.png") center / cover no-repeat;
+        url("../images/backgrounds/lilit_interrogation.png") center / cover no-repeat;
 }
 
 .detective-notebook {
     width: min(540px, 100%);
-    min-height: 780px;
-    padding: 122px 78px 82px 116px;
+    height: min(780px, calc(100vh - 128px));
+    min-height: 0;
+    padding: 92px 78px 112px 116px;
     background: transparent url("../images/backgrounds/notebook.png?v=20260506-2") center / contain no-repeat;
     border: 0;
     border-radius: 0;
@@ -953,6 +965,29 @@ body[data-page="ending"] {
     justify-self: start;
     display: flex;
     align-items: flex-start;
+}
+
+.detective-notebook > [data-phrases-list] {
+    width: min(320px, 100%);
+    max-height: calc(min(780px, calc(100vh - 128px)) - 204px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(54, 36, 22, 0.42) transparent;
+}
+
+.detective-notebook > [data-phrases-list]::-webkit-scrollbar {
+    width: 6px;
+}
+
+.detective-notebook > [data-phrases-list]::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.detective-notebook > [data-phrases-list]::-webkit-scrollbar-thumb {
+    background: rgba(54, 36, 22, 0.36);
+    border-radius: 999px;
 }
 
 .notebook-group {
@@ -1027,22 +1062,53 @@ body[data-page="ending"] {
 }
 
 .ending-stage {
-    grid-template-columns: minmax(0, 720px);
-    justify-content: start;
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
+    justify-content: center;
+    align-items: center;
+    gap: clamp(18px, 4vw, 44px);
+    padding: 86px clamp(18px, 5vw, 70px) 34px;
     background:
         linear-gradient(rgba(8, 6, 5, 0.1), rgba(8, 6, 5, 0.26)),
         url("../images/backgrounds/interrogation.png") center / cover no-repeat;
 }
 
 .ending-report {
-    min-height: 460px;
+    min-height: 0;
+    max-height: calc(100vh - 130px);
+    overflow: hidden;
     background: rgba(246, 236, 214, 0.72);
     border-color: rgba(255, 246, 225, 0.5);
     backdrop-filter: blur(3px);
 }
 
 .ending-images {
-    display: none;
+    display: grid;
+    gap: 16px;
+    max-height: calc(100vh - 130px);
+}
+
+.ending-images figure {
+    background: rgba(246, 236, 214, 0.72);
+    border-color: rgba(255, 246, 225, 0.5);
+    backdrop-filter: blur(3px);
+}
+
+.ending-image {
+    height: min(28vh, 210px);
+    background-size: cover;
+    background-position: center;
+}
+
+.ending-report h1 {
+    font-size: clamp(34px, 5vw, 56px);
+}
+
+.ending-report div {
+    font-size: clamp(17px, 1.7vw, 20px);
+    line-height: 1.55;
 }
 
 @media (max-width: 900px) {
@@ -1066,7 +1132,12 @@ body[data-page="ending"] {
 
     .detective-notebook {
         width: min(500px, 92vw);
-        min-height: 680px;
-        padding: 108px 70px 76px 96px;
+        height: min(680px, calc(100vh - 96px));
+        min-height: 0;
+        padding: 82px 70px 102px 96px;
+    }
+
+    .detective-notebook > [data-phrases-list] {
+        max-height: calc(min(680px, calc(100vh - 96px)) - 184px);
     }
 }

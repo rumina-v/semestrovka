@@ -53,6 +53,58 @@
       "PackagePath": "staticwebassets\\js\\app.js"
     },
     {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\js\\auth.js",
+      "PackagePath": "staticwebassets\\js\\auth.js"
+    },
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\js\\caseDesk.js",
+      "PackagePath": "staticwebassets\\js\\caseDesk.js"
+    },
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\js\\core.js",
+      "PackagePath": "staticwebassets\\js\\core.js"
+    },
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\js\\interrogation.js",
+      "PackagePath": "staticwebassets\\js\\interrogation.js"
+    },
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\js\\pages.js",
+      "PackagePath": "staticwebassets\\js\\pages.js"
+    },
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\pages\\admin.html",
+      "PackagePath": "staticwebassets\\pages\\admin.html"
+    },
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\pages\\desk.html",
+      "PackagePath": "staticwebassets\\pages\\desk.html"
+    },
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\pages\\ending.html",
+      "PackagePath": "staticwebassets\\pages\\ending.html"
+    },
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\pages\\home.html",
+      "PackagePath": "staticwebassets\\pages\\home.html"
+    },
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\pages\\login.html",
+      "PackagePath": "staticwebassets\\pages\\login.html"
+    },
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\pages\\profile.html",
+      "PackagePath": "staticwebassets\\pages\\profile.html"
+    },
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\pages\\register.html",
+      "PackagePath": "staticwebassets\\pages\\register.html"
+    },
+    {
+      "Id": "C:\\Users\\vikto\\OneDrive\\Desktop\\sem\\DetectiveInterrogation\\wwwroot\\pages\\room.html",
+      "PackagePath": "staticwebassets\\pages\\room.html"
+    },
+    {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.DetectiveInterrogation.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },

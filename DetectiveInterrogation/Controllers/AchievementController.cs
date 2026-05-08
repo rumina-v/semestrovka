@@ -2,6 +2,7 @@ using DetectiveInterrogation.Helpers;
 using DetectiveInterrogation.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace DetectiveInterrogation.Controllers;
 
@@ -45,7 +46,7 @@ public class AchievementController : ControllerBase
 
     [HttpGet("{achievementId}")]
     [AllowAnonymous]
-    public async Task<IActionResult> GetAchievementById(int achievementId)
+    public async Task<IActionResult> GetAchievementById([Range(1, int.MaxValue, ErrorMessage = "AchievementId must be positive")] int achievementId)
     {
         var achievement = await _achievementService.GetAchievementByIdAsync(achievementId);
         if (achievement == null)

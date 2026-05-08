@@ -4,31 +4,27 @@ namespace DetectiveInterrogation.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly IWebHostEnvironment _environment;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(IWebHostEnvironment environment)
     {
-        _logger = logger;
+        _environment = environment;
     }
 
     public IActionResult Index()
     {
-        return View();
-    }
-
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
-    public IActionResult About()
-    {
-        return View();
+        return HtmlPage("home.html");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
-        return View();
+        return HtmlPage("home.html");
+    }
+
+    private PhysicalFileResult HtmlPage(string fileName)
+    {
+        var path = Path.Combine(_environment.WebRootPath, "pages", fileName);
+        return PhysicalFile(path, "text/html; charset=utf-8");
     }
 }

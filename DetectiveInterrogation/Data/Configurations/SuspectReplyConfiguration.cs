@@ -13,16 +13,22 @@ public class SuspectReplyConfiguration : IEntityTypeConfiguration<SuspectReply>
         builder.Property(sr => sr.SuspectId)
             .IsRequired();
         
-        builder.Property(sr => sr.PhraseId)
+        builder.Property(sr => sr.EvidencePhraseId)
             .IsRequired();
         
-        builder.Property(sr => sr.ReplyText)
+        builder.Property(sr => sr.MinTrust)
             .IsRequired();
-        
-        builder.Property(sr => sr.TrustChange)
-            .HasDefaultValue(0);
-        
-        builder.Property(sr => sr.AggressionChange)
-            .HasDefaultValue(0);
+
+        builder.Property(sr => sr.MaxTrust)
+            .IsRequired();
+
+        builder.Property(sr => sr.MinPressure)
+            .IsRequired();
+
+        builder.Property(sr => sr.MaxPressure)
+            .IsRequired();
+
+        builder.Property(sr => sr.Text)
+            .IsRequired();
     }
 }

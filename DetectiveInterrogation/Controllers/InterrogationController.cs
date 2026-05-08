@@ -1,7 +1,9 @@
 using DetectiveInterrogation.Helpers;
+using DetectiveInterrogation.Models.DTOs.Interrogation;
 using DetectiveInterrogation.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace DetectiveInterrogation.Controllers;
 
@@ -25,7 +27,7 @@ public class InterrogationController : ControllerBase
     }
 
     [HttpPost("start")]
-    public async Task<IActionResult> StartInterrogation([FromBody] StartInterrogationRequest request)
+    public async Task<IActionResult> StartInterrogation([FromBody] StartInterrogationDto request)
     {
         var userId = _claimsHelper.GetUserId(User);
         if (userId == null)
@@ -42,13 +44,15 @@ public class InterrogationController : ControllerBase
     }
 
     [HttpPost("phrase/{sessionId}")]
-    public async Task<IActionResult> ProcessPhrase(int sessionId, [FromBody] ProcessPhraseRequest request)
+    public async Task<IActionResult> ProcessPhrase(
+        [Range(1, int.MaxValue, ErrorMessage = "SessionId must be positive")] int sessionId,
+        [FromBody] ProcessPhraseDto request)
     {
         var userId = _claimsHelper.GetUserId(User);
         if (userId == null)
             return Unauthorized();
 
-        var result = await _interrogationService.ProcessPhrasSelectionAsync(sessionId, request.PhraseId);
+        var result = await _interrogationService.ProcessPhrasSelectionAsync(userId.Value, sessionId, request.PhraseId);
         if (result == null)
             return BadRequest(new { message = "Failed to process phrase" });
 
@@ -56,9 +60,13 @@ public class InterrogationController : ControllerBase
     }
 
     [HttpGet("state/{sessionId}")]
-    public async Task<IActionResult> GetSessionState(int sessionId)
+    public async Task<IActionResult> GetSessionState([Range(1, int.MaxValue, ErrorMessage = "SessionId must be positive")] int sessionId)
     {
-        var state = await _interrogationService.GetSessionStateAsync(sessionId);
+        var userId = _claimsHelper.GetUserId(User);
+        if (userId == null)
+            return Unauthorized();
+
+        var state = await _interrogationService.GetSessionStateAsync(userId.Value, sessionId);
         if (state == null)
             return NotFound(new { message = "Session not found" });
 
@@ -66,7 +74,7 @@ public class InterrogationController : ControllerBase
     }
 
     [HttpGet("ending/{caseId}")]
-    public async Task<IActionResult> GetEnding(int caseId)
+    public async Task<IActionResult> GetEnding([Range(1, int.MaxValue, ErrorMessage = "CaseId must be positive")] int caseId)
     {
         var userId = _claimsHelper.GetUserId(User);
         if (userId == null)
@@ -80,9 +88,13 @@ public class InterrogationController : ControllerBase
     }
 
     [HttpPost("end/{sessionId}")]
-    public async Task<IActionResult> EndInterrogation(int sessionId)
+    public async Task<IActionResult> EndInterrogation([Range(1, int.MaxValue, ErrorMessage = "SessionId must be positive")] int sessionId)
     {
-        var result = await _interrogationService.EndInterrogationSessionAsync(sessionId);
+        var userId = _claimsHelper.GetUserId(User);
+        if (userId == null)
+            return Unauthorized();
+
+        var result = await _interrogationService.EndInterrogationSessionAsync(userId.Value, sessionId);
         if (!result)
             return BadRequest(new { message = "Failed to end interrogation" });
 
@@ -90,20 +102,13 @@ public class InterrogationController : ControllerBase
     }
 
     [HttpGet("phrases/{sessionId}")]
-    public async Task<IActionResult> GetAvailablePhrases(int sessionId)
+    public async Task<IActionResult> GetAvailablePhrases([Range(1, int.MaxValue, ErrorMessage = "SessionId must be positive")] int sessionId)
     {
-        var phrases = await _interrogationService.GetAvailablePhrasesAsync(sessionId);
+        var userId = _claimsHelper.GetUserId(User);
+        if (userId == null)
+            return Unauthorized();
+
+        var phrases = await _interrogationService.GetAvailablePhrasesAsync(userId.Value, sessionId);
         return Ok(phrases);
     }
-}
-
-public class StartInterrogationRequest
-{
-    public int CaseId { get; set; }
-    public int SuspectId { get; set; }
-}
-
-public class ProcessPhraseRequest
-{
-    public int PhraseId { get; set; }
 }

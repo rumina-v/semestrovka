@@ -12,16 +12,17 @@ public class EvidenceConfiguration : IEntityTypeConfiguration<Evidence>
         
         builder.Property(e => e.CaseId)
             .IsRequired();
+
+        builder.Property(e => e.SuspectId)
+            .IsRequired()
+            .HasMaxLength(20);
         
         builder.Property(e => e.Title)
             .IsRequired()
             .HasMaxLength(255);
         
-        builder.Property(e => e.ShortText)
-            .IsRequired(false);
-        
-        builder.Property(e => e.FullText)
-            .IsRequired(false);
+        builder.Property(e => e.Description)
+            .IsRequired();
         
         builder.HasMany(e => e.Phrases)
             .WithOne(p => p.Evidence)

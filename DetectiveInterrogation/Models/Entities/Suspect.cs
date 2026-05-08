@@ -12,7 +12,7 @@ public class Suspect
     
     public int InitialTrust { get; set; } = 50;
     
-    public int InitialAggression { get; set; } = 50;
+    public int InitialPressure { get; set; } = 50;
     
     public bool IsGuilty { get; set; }
 

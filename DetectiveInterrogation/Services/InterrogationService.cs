@@ -1,3 +1,4 @@
+using DetectiveInterrogation.Models.DTOs.Interrogation;
 using DetectiveInterrogation.Models.Entities;
 using DetectiveInterrogation.Repositories.Interfaces;
 using DetectiveInterrogation.Services.Interfaces;
@@ -28,12 +29,15 @@ public class InterrogationService : IInterrogationService
         _logger = logger;
     }
 
-    public async Task<object?> StartInterrogationSessionAsync(int userId, int caseId, int suspectId)
+    public async Task<StartInterrogationResponseDto?> StartInterrogationSessionAsync(int userId, int caseId, int suspectId)
     {
         try
         {
             var suspect = await _interrogationRepository.GetSuspectByIdAsync(suspectId);
             if (suspect == null)
+                return null;
+
+            if (suspect.CaseId != caseId)
                 return null;
 
             var session = new InterrogationSession
@@ -42,7 +46,7 @@ public class InterrogationService : IInterrogationService
                 CaseId = caseId,
                 SuspectId = suspectId,
                 CurrentTrust = suspect.InitialTrust,
-                CurrentAggression = suspect.InitialAggression,
+                CurrentPressure = suspect.InitialPressure,
                 Status = "InProgress"
             };
 
@@ -50,11 +54,11 @@ public class InterrogationService : IInterrogationService
 
             _logger.LogInformation("Interrogation session started for user {UserId}, suspect {SuspectId}", userId, suspectId);
 
-            return new
+            return new StartInterrogationResponseDto
             {
-                session.Id,
-                session.CurrentTrust,
-                session.CurrentAggression,
+                Id = session.Id,
+                CurrentTrust = session.CurrentTrust,
+                CurrentPressure = session.CurrentPressure,
                 SuspectName = suspect.Name,
                 Message = "Interrogation session started. Choose a phrase to begin."
             };
@@ -66,12 +70,15 @@ public class InterrogationService : IInterrogationService
         }
     }
 
-    public async Task<object?> ProcessPhrasSelectionAsync(int sessionId, int phraseId)
+    public async Task<InterrogationResultDto?> ProcessPhrasSelectionAsync(int userId, int sessionId, int phraseId)
     {
         try
         {
             var session = await _interrogationRepository.GetSessionByIdAsync(sessionId);
             if (session == null)
+                return null;
+
+            if (session.UserId != userId)
                 return null;
 
             var phrase = await _interrogationRepository.GetPhraseByIdAsync(phraseId);
@@ -82,10 +89,13 @@ public class InterrogationService : IInterrogationService
             if (evidence == null)
                 return null;
 
+            if (!IsPhraseAllowedForSession(session, evidence))
+                return new InterrogationResultDto { Error = "This phrase is not available for this interrogation session" };
+
             var alreadyUsed = await _interrogationRepository.IsEvidenceUsedAsync(sessionId, evidence.Id);
 
             if (alreadyUsed)
-                return new { Error = "This evidence has already been used in this interrogation session" };
+                return new InterrogationResultDto { Error = "This evidence has already been used in this interrogation session" };
 
             var sessionUsedEvidence = new SessionUsedEvidence
             {
@@ -94,27 +104,34 @@ public class InterrogationService : IInterrogationService
             };
             _interrogationRepository.AddSessionUsedEvidence(sessionUsedEvidence);
 
-            var reply = await _interrogationRepository.GetReplyAsync(session.SuspectId, phraseId);
+            session.CurrentTrust = Math.Clamp(session.CurrentTrust + phrase.TrustChange, 0, 100);
+            session.CurrentPressure = Math.Clamp(session.CurrentPressure + phrase.PressureChange, 0, 100);
+
+            var reply = await _interrogationRepository.GetReplyAsync(
+                session.SuspectId,
+                phraseId,
+                session.CurrentTrust,
+                session.CurrentPressure);
 
             if (reply == null)
-                return new { Error = "No reply found for this phrase" };
-
-            session.CurrentTrust = Math.Clamp(session.CurrentTrust + reply.TrustChange, 0, 100);
-            session.CurrentAggression = Math.Clamp(session.CurrentAggression + reply.AggressionChange, 0, 100);
+                return new InterrogationResultDto { Error = "No reply found for current trust and pressure" };
 
             CheckInterrogationEnd(session);
 
             await _interrogationRepository.SaveChangesAsync();
 
-            _logger.LogInformation("Phrase processed in session {SessionId}: Trust={Trust}, Aggression={Aggression}",
-                sessionId, session.CurrentTrust, session.CurrentAggression);
+            _logger.LogInformation("Phrase processed in session {SessionId}: Trust={Trust}, Pressure={Pressure}",
+                sessionId, session.CurrentTrust, session.CurrentPressure);
 
-            return new
+            return new InterrogationResultDto
             {
-                ReplyText = reply.ReplyText,
-                session.CurrentTrust,
-                session.CurrentAggression,
-                session.Status,
+                PhraseText = phrase.Text,
+                ReplyText = reply.Text,
+                CurrentTrust = session.CurrentTrust,
+                CurrentPressure = session.CurrentPressure,
+                TrustChange = phrase.TrustChange,
+                PressureChange = phrase.PressureChange,
+                Status = session.Status,
                 EvidenceTitle = evidence.Title
             };
         }
@@ -125,7 +142,7 @@ public class InterrogationService : IInterrogationService
         }
     }
 
-    public async Task<object?> GetSessionStateAsync(int sessionId)
+    public async Task<InterrogationStateDto?> GetSessionStateAsync(int userId, int sessionId)
     {
         try
         {
@@ -134,14 +151,17 @@ public class InterrogationService : IInterrogationService
             if (session == null)
                 return null;
 
+            if (session.UserId != userId)
+                return null;
+
             var usedEvidenceIds = await _interrogationRepository.GetUsedEvidenceIdsAsync(sessionId);
 
-            return new
+            return new InterrogationStateDto
             {
-                session.Id,
-                session.CurrentTrust,
-                session.CurrentAggression,
-                session.Status,
+                Id = session.Id,
+                CurrentTrust = session.CurrentTrust,
+                CurrentPressure = session.CurrentPressure,
+                Status = session.Status,
                 SuspectName = session.Suspect.Name,
                 CaseName = session.Case.Title,
                 UsedEvidenceCount = usedEvidenceIds.Count
@@ -154,12 +174,15 @@ public class InterrogationService : IInterrogationService
         }
     }
 
-    public async Task<bool> EndInterrogationSessionAsync(int sessionId)
+    public async Task<bool> EndInterrogationSessionAsync(int userId, int sessionId)
     {
         try
         {
             var session = await _interrogationRepository.GetSessionWithResultDetailsAsync(sessionId);
             if (session == null)
+                return false;
+
+            if (session.UserId != userId)
                 return false;
 
             if (session.Status == "InProgress")
@@ -186,24 +209,27 @@ public class InterrogationService : IInterrogationService
         }
     }
 
-    public async Task<List<object>> GetAvailablePhrasesAsync(int sessionId)
+    public async Task<List<AvailablePhraseDto>> GetAvailablePhrasesAsync(int userId, int sessionId)
     {
         try
         {
             var session = await _interrogationRepository.GetSessionByIdAsync(sessionId);
             if (session == null)
-                return new List<object>();
+                return new List<AvailablePhraseDto>();
+
+            if (session.UserId != userId)
+                return new List<AvailablePhraseDto>();
 
             var usedEvidenceIds = await _interrogationRepository.GetUsedEvidenceIdsAsync(sessionId);
 
             var availablePhrases = await _interrogationRepository.GetAvailablePhrasesAsync(session.SuspectId, usedEvidenceIds);
 
-            return availablePhrases.Cast<object>().ToList();
+            return availablePhrases;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error getting available phrases");
-            return new List<object>();
+            return new List<AvailablePhraseDto>();
         }
     }
 
@@ -212,7 +238,7 @@ public class InterrogationService : IInterrogationService
         return await _achievementService.AwardAchievementAsync(userId, achievementId);
     }
 
-    public async Task<object?> GetCaseEndingAsync(int userId, int caseId)
+    public async Task<CaseEndingDto?> GetCaseEndingAsync(int userId, int caseId)
     {
         try
         {
@@ -223,12 +249,10 @@ public class InterrogationService : IInterrogationService
             sessions = sessions.OrderBy(s => s.Id).ToList();
             var caseEntity = sessions.Last().Case;
             var achievements = await _interrogationRepository.GetAchievementTitlesByUserIdAsync(userId);
-            var story = await GetFullCaseStoryAsync(caseEntity.FullDescription);
-
             var hasConfession = sessions.Any(s => s.Status == "Confession");
             var hasRefusal = sessions.Any(s => s.Status == "Refused");
             var averageTrust = (int)Math.Round(sessions.Average(s => s.CurrentTrust));
-            var averageAggression = (int)Math.Round(sessions.Average(s => s.CurrentAggression));
+            var averagePressure = (int)Math.Round(sessions.Average(s => s.CurrentPressure));
 
             var resultTitle = hasConfession
                 ? "Признание получено"
@@ -236,23 +260,25 @@ public class InterrogationService : IInterrogationService
                     ? "Допрос сорвался"
                     : "Расследование завершено";
 
-            var resultText = BuildEndingText(sessions, story, hasConfession, hasRefusal);
+            var resultText = SelectEndingText(caseEntity, hasConfession, hasRefusal);
 
-            return new
+            return new CaseEndingDto
             {
                 CaseId = caseId,
                 CaseTitle = caseEntity.Title,
                 ResultTitle = resultTitle,
                 ResultText = resultText,
+                CourtImagePath = caseEntity.CourtImagePath,
+                PrisonImagePath = caseEntity.PrisonImagePath,
                 AverageTrust = averageTrust,
-                AverageAggression = averageAggression,
-                Sessions = sessions.Select(s => new
+                AveragePressure = averagePressure,
+                Sessions = sessions.Select(s => new EndingSessionDto
                 {
-                    s.Id,
+                    Id = s.Id,
                     SuspectName = s.Suspect.Name,
-                    s.Status,
-                    s.CurrentTrust,
-                    s.CurrentAggression
+                    Status = s.Status,
+                    CurrentTrust = s.CurrentTrust,
+                    CurrentPressure = s.CurrentPressure
                 }),
                 Achievements = achievements
             };
@@ -266,16 +292,44 @@ public class InterrogationService : IInterrogationService
 
     private void CheckInterrogationEnd(InterrogationSession session)
     {
-        if (session.CurrentTrust == 100 && session.CurrentAggression == 100)
+        if (session.CurrentTrust == 100 && session.CurrentPressure == 100)
         {
             session.Status = "Confession";
             _logger.LogInformation("Suspect confessed in session {SessionId}", session.Id);
         }
-        else if (session.CurrentTrust == 0 && session.CurrentAggression == 100)
+        else if (session.CurrentTrust == 0 && session.CurrentPressure == 100)
         {
             session.Status = "Refused";
             _logger.LogInformation("Suspect refused to talk in session {SessionId}", session.Id);
         }
+    }
+
+    private static bool IsPhraseAllowedForSession(InterrogationSession session, Evidence evidence)
+    {
+        return evidence.CaseId == session.CaseId
+            && IsEvidenceAssignedToSuspect(evidence, session.SuspectId);
+    }
+
+    private static bool IsEvidenceAssignedToSuspect(Evidence evidence, int suspectId)
+    {
+        var suspectIdText = suspectId.ToString();
+
+        return evidence.SuspectId
+            .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Contains(suspectIdText);
+    }
+
+    private static string SelectEndingText(Case caseEntity, bool hasConfession, bool hasRefusal)
+    {
+        var text = hasConfession
+            ? caseEntity.EndingSuccessText
+            : hasRefusal
+                ? caseEntity.EndingRefusalText
+                : caseEntity.EndingDefaultText;
+
+        return string.IsNullOrWhiteSpace(text)
+            ? "Расследование завершено. Материалы дела переданы в суд, а итоговое решение вынесено по собранным уликам и показаниям."
+            : text;
     }
 
     private async Task<string> GetFullCaseStoryAsync(string? fallbackStory)
@@ -363,7 +417,7 @@ public class InterrogationService : IInterrogationService
         builder.AppendLine("Итоги допросов:");
         foreach (var session in sessions)
         {
-            builder.AppendLine($"- {session.Suspect.Name}: статус {session.Status}, доверие {session.CurrentTrust}, давление {session.CurrentAggression}.");
+            builder.AppendLine($"- {session.Suspect.Name}: статус {session.Status}, доверие {session.CurrentTrust}, давление {session.CurrentPressure}.");
         }
 
         builder.AppendLine();

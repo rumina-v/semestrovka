@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Профиль - Detective Interrogation</title>
+    <link rel="stylesheet" href="/css/site.css">
+</head>
+<body data-page="profile">
+    <a class="back-link" href="javascript:history.back()" aria-label="Назад">←</a>
+
+    <main class="profile-screen" data-profile-page>
+        <section class="profile-card">
+            <h1>Профиль</h1>
+            <div class="profile-fields">
+                <div class="profile-field">
+                    <span>Имя</span>
+                    <strong data-profile-name>Детектив</strong>
+                </div>
+                <div class="profile-field">
+                    <span>Email</span>
+                    <strong data-profile-email></strong>
+                </div>
+            </div>
+            <h2>Достижения</h2>
+            <div class="achievement-list" data-achievements-list></div>
+            <button class="secondary-action profile-logout" type="button" data-logout>Выйти</button>
+            <div class="status" data-status></div>
+        </section>
+    </main>
+
+    <script src="/js/core.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/caseDesk.js"></script>
+    <script src="/js/interrogation.js"></script>
+    <script src="/js/pages.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>

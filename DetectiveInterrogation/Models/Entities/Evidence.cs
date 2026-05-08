@@ -5,12 +5,12 @@ public class Evidence
     public int Id { get; set; }
     
     public int CaseId { get; set; }
+
+    public string SuspectId { get; set; } = string.Empty;
     
     public string Title { get; set; } = string.Empty;
     
-    public string? ShortText { get; set; }
-    
-    public string? FullText { get; set; }
+    public string Description { get; set; } = string.Empty;
 
     public Case Case { get; set; } = null!;
     public ICollection<EvidencePhrase> Phrases { get; set; } = new List<EvidencePhrase>();

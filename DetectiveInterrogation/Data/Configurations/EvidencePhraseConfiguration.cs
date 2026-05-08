@@ -15,10 +15,16 @@ public class EvidencePhraseConfiguration : IEntityTypeConfiguration<EvidencePhra
         
         builder.Property(ep => ep.Text)
             .IsRequired();
+
+        builder.Property(ep => ep.TrustChange)
+            .HasDefaultValue(0);
+
+        builder.Property(ep => ep.PressureChange)
+            .HasDefaultValue(0);
         
         builder.HasMany(ep => ep.SuspectReplies)
             .WithOne(sr => sr.Phrase)
-            .HasForeignKey(sr => sr.PhraseId)
+            .HasForeignKey(sr => sr.EvidencePhraseId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

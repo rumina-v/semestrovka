@@ -12,6 +12,16 @@ public class Case
     
     public string? FullDescription { get; set; }
 
+    public string? EndingSuccessText { get; set; }
+
+    public string? EndingRefusalText { get; set; }
+
+    public string? EndingDefaultText { get; set; }
+
+    public string? CourtImagePath { get; set; }
+
+    public string? PrisonImagePath { get; set; }
+
     public ICollection<Suspect> Suspects { get; set; } = new List<Suspect>();
     public ICollection<Evidence> Evidence { get; set; } = new List<Evidence>();
     public ICollection<InterrogationSession> InterrogationSessions { get; set; } = new List<InterrogationSession>();

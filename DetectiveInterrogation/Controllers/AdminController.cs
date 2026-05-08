@@ -1,6 +1,8 @@
 using DetectiveInterrogation.Services.Interfaces;
+using DetectiveInterrogation.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace DetectiveInterrogation.Controllers;
 
@@ -10,11 +12,13 @@ namespace DetectiveInterrogation.Controllers;
 public class AdminController : ControllerBase
 {
     private readonly IAdminService _adminService;
+    private readonly ClaimsHelper _claimsHelper;
     private readonly ILogger<AdminController> _logger;
 
-    public AdminController(IAdminService adminService, ILogger<AdminController> logger)
+    public AdminController(IAdminService adminService, ClaimsHelper claimsHelper, ILogger<AdminController> logger)
     {
         _adminService = adminService;
+        _claimsHelper = claimsHelper;
         _logger = logger;
     }
 
@@ -33,7 +37,7 @@ public class AdminController : ControllerBase
     }
 
     [HttpDelete("users/{userId}")]
-    public async Task<IActionResult> DeleteUser(int userId)
+    public async Task<IActionResult> DeleteUser([Range(1, int.MaxValue, ErrorMessage = "UserId must be positive")] int userId)
     {
         var result = await _adminService.DeleteUserAsync(userId);
         if (!result)
@@ -41,5 +45,20 @@ public class AdminController : ControllerBase
 
         _logger.LogInformation("User {UserId} deleted by admin", userId);
         return Ok(new { message = "User deleted successfully" });
+    }
+
+    [HttpPost("test-email")]
+    public async Task<IActionResult> SendTestEmail()
+    {
+        var userId = _claimsHelper.GetUserId(User);
+        if (userId == null)
+            return Unauthorized();
+
+        var sent = await _adminService.SendTestEmailAsync(userId.Value);
+        if (!sent)
+            return BadRequest(new { message = "Failed to send test email. Check SMTP settings and logs." });
+
+        _logger.LogInformation("SMTP test email sent by admin {UserId}", userId.Value);
+        return Ok(new { message = "Test email sent to the current admin email." });
     }
 }

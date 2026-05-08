@@ -24,7 +24,7 @@ public class SuspectConfiguration : IEntityTypeConfiguration<Suspect>
             .IsRequired()
             .HasDefaultValue(50);
         
-        builder.Property(s => s.InitialAggression)
+        builder.Property(s => s.InitialPressure)
             .IsRequired()
             .HasDefaultValue(50);
         
@@ -32,7 +32,7 @@ public class SuspectConfiguration : IEntityTypeConfiguration<Suspect>
             v => v > 100 ? 100 : (v < 0 ? 0 : v),
             v => v));
         
-        builder.Property(s => s.InitialAggression).HasConversion(new Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<int, int>(
+        builder.Property(s => s.InitialPressure).HasConversion(new Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<int, int>(
             v => v > 100 ? 100 : (v < 0 ? 0 : v),
             v => v));
         

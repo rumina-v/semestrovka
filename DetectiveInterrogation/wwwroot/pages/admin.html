@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Админ-панель - Detective Interrogation</title>
+    <link rel="stylesheet" href="/css/site.css">
+</head>
+<body data-page="admin">
+    <a class="back-link" href="/" aria-label="На главную">←</a>
+
+    <main class="admin-screen">
+        <section class="admin-card">
+            <h1>Админ-панель</h1>
+            <button class="primary-action compact" type="button" data-refresh-admin>Обновить</button>
+        </section>
+        <section class="admin-grid">
+            <article class="admin-card">
+                <h2>Статистика</h2>
+                <div data-admin-stats></div>
+            </article>
+            <article class="admin-card">
+                <h2>Пользователи</h2>
+                <div data-admin-users></div>
+            </article>
+            <article class="admin-card admin-card-wide">
+                <h2>Достижения</h2>
+                <div data-admin-achievements></div>
+            </article>
+        </section>
+        <div class="status" data-status></div>
+    </main>
+
+    <script src="/js/core.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/caseDesk.js"></script>
+    <script src="/js/interrogation.js"></script>
+    <script src="/js/pages.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>

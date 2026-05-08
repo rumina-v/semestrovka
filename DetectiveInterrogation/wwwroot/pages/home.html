@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Главная - Detective Interrogation</title>
+    <link rel="stylesheet" href="/css/site.css">
+</head>
+<body data-page="home">
+    <header class="topbar">
+        <a class="brand" href="/">Detective Interrogation</a>
+        <nav class="top-actions" data-home-nav>
+            <a class="nav-button" href="/auth/login" data-guest-only>Авторизация</a>
+            <a class="nav-button solid" href="/auth/register" data-guest-only>Регистрация</a>
+            <a class="nav-button solid" href="/profile" data-auth-only hidden>Профиль</a>
+        </nav>
+    </header>
+
+    <main class="newspaper-stage" data-home-page>
+        <article class="home-action-panel">
+            <button class="investigate-button" type="button" data-investigate>Расследовать</button>
+            <div class="status" data-status></div>
+        </article>
+    </main>
+
+    <script src="/js/core.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/caseDesk.js"></script>
+    <script src="/js/interrogation.js"></script>
+    <script src="/js/pages.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>

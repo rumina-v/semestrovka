@@ -35,8 +35,7 @@ public class ExceptionHandlingMiddleware
 
         var response = new
         {
-            message = "An error occurred while processing your request",
-            error = exception.Message
+            message = "An error occurred while processing your request"
         };
 
         return context.Response.WriteAsJsonAsync(response);

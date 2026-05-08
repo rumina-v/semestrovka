@@ -1,6 +1,6 @@
+using DetectiveInterrogation.Models.DTOs.External;
 using DetectiveInterrogation.Services.Interfaces;
 using DetectiveInterrogation.Settings;
-using System.Text.Json;
 
 namespace DetectiveInterrogation.Services;
 
@@ -17,7 +17,7 @@ public class ExternalApiService : IExternalApiService
         _logger = logger;
     }
 
-    public async Task<object?> CallExternalApiAsync(string endpoint, object? data = null)
+    public async Task<ExternalApiResponseDto> CallExternalApiAsync(string endpoint, string? jsonPayload = null)
     {
         try
         {
@@ -26,9 +26,9 @@ public class ExternalApiService : IExternalApiService
             _httpClient.DefaultRequestHeaders.Add("X-API-Key", _settings.ApiKey);
 
             HttpResponseMessage response;
-            if (data != null)
+            if (!string.IsNullOrWhiteSpace(jsonPayload))
             {
-                var content = new StringContent(JsonSerializer.Serialize(data), System.Text.Encoding.UTF8, "application/json");
+                var content = new StringContent(jsonPayload, System.Text.Encoding.UTF8, "application/json");
                 response = await _httpClient.PostAsync(url, content);
             }
             else
@@ -39,16 +39,31 @@ public class ExternalApiService : IExternalApiService
             if (response.IsSuccessStatusCode)
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<object>(responseContent);
+                return new ExternalApiResponseDto
+                {
+                    Success = true,
+                    StatusCode = (int)response.StatusCode,
+                    Content = responseContent
+                };
             }
 
             _logger.LogWarning("External API call failed: {StatusCode}", response.StatusCode);
-            return null;
+            return new ExternalApiResponseDto
+            {
+                Success = false,
+                StatusCode = (int)response.StatusCode,
+                ErrorMessage = "External API call failed"
+            };
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error calling external API");
-            return null;
+            return new ExternalApiResponseDto
+            {
+                Success = false,
+                StatusCode = 0,
+                ErrorMessage = "Error calling external API"
+            };
         }
     }
 

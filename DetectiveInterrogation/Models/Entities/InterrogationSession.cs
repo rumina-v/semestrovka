@@ -12,7 +12,7 @@ public class InterrogationSession
     
     public int CurrentTrust { get; set; } = 50;
     
-    public int CurrentAggression { get; set; } = 50;
+    public int CurrentPressure { get; set; } = 50;
     
     public string Status { get; set; } = "InProgress";
 

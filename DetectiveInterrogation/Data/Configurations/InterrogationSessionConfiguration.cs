@@ -22,14 +22,14 @@ public class InterrogationSessionConfiguration : IEntityTypeConfiguration<Interr
         builder.Property(s => s.CurrentTrust)
             .HasDefaultValue(50);
         
-        builder.Property(s => s.CurrentAggression)
+        builder.Property(s => s.CurrentPressure)
             .HasDefaultValue(50);
         
         builder.Property(s => s.CurrentTrust).HasConversion(new Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<int, int>(
             v => v > 100 ? 100 : (v < 0 ? 0 : v),
             v => v));
         
-        builder.Property(s => s.CurrentAggression).HasConversion(new Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<int, int>(
+        builder.Property(s => s.CurrentPressure).HasConversion(new Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<int, int>(
             v => v > 100 ? 100 : (v < 0 ? 0 : v),
             v => v));
         

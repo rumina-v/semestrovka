@@ -71,6 +71,19 @@ builder.Services.AddAuthentication(options =>
         ValidAudience = jwtSettings.Audience,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret))
     };
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            if (string.IsNullOrWhiteSpace(context.Token)
+                && context.Request.Cookies.TryGetValue("detective.jwt", out var cookieToken))
+            {
+                context.Token = cookieToken;
+            }
+
+            return Task.CompletedTask;
+        }
+    };
 });
 
 builder.Services.AddAuthorization();
@@ -93,8 +106,7 @@ builder.Services.AddScoped<JwtTokenHelper>();
 builder.Services.AddScoped<PasswordHasher>();
 builder.Services.AddScoped<ClaimsHelper>();
 
-builder.Services.AddControllersWithViews()
-    .AddRazorRuntimeCompilation();
+builder.Services.AddControllers();
 
 builder.Services.AddSwaggerGen();
 
@@ -104,6 +116,7 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     var passwordHasher = scope.ServiceProvider.GetRequiredService<PasswordHasher>();
+    db.Database.Migrate();
     DbInitializer.Initialize(db, passwordHasher);
 }
 

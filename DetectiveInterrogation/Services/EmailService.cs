@@ -19,15 +19,19 @@ public class EmailService : IEmailService
         _logger = logger;
     }
 
-    public async Task SendEmailAsync(string to, string subject, string body)
+    public async Task<bool> SendEmailAsync(string to, string subject, string body)
     {
         try
         {
             using (var client = new SmtpClient(_emailSettings.SmtpServer, _emailSettings.SmtpPort))
             {
                 client.UseDefaultCredentials = false;
-                client.Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password);
-                client.EnableSsl = true;
+                client.EnableSsl = _emailSettings.EnableSsl;
+
+                if (!string.IsNullOrWhiteSpace(_emailSettings.Username))
+                {
+                    client.Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password);
+                }
 
                 var mailMessage = new MailMessage
                 {
@@ -40,29 +44,31 @@ public class EmailService : IEmailService
 
                 await client.SendMailAsync(mailMessage);
                 _logger.LogInformation("Email sent to {Email}", to);
+                return true;
             }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to send email to {Email}", to);
+            return false;
         }
     }
 
-    public async Task SendWelcomeEmailAsync(string email, string username)
+    public async Task<bool> SendWelcomeEmailAsync(string email, string username)
     {
         var subject = "Welcome to Detective Interrogation";
         var body = $"<h1>Welcome, {username}!</h1><p>Thank you for joining our detective game.</p>";
-        await SendEmailAsync(email, subject, body);
+        return await SendEmailAsync(email, subject, body);
     }
 
-    public async Task SendPasswordResetEmailAsync(string email, string resetLink)
+    public async Task<bool> SendPasswordResetEmailAsync(string email, string resetLink)
     {
         var subject = "Password Reset";
         var body = $"<p><a href='{resetLink}'>Click here to reset your password</a></p>";
-        await SendEmailAsync(email, subject, body);
+        return await SendEmailAsync(email, subject, body);
     }
 
-    public async Task SendInterrogationResultEmailAsync(
+    public async Task<bool> SendInterrogationResultEmailAsync(
         string email,
         string username,
         string caseTitle,
@@ -92,10 +98,10 @@ public class EmailService : IEmailService
             """;
 
         var fileName = $"{ToFileName(caseTitle)}-full-story.txt";
-        await SendEmailWithAttachmentAsync(email, subject, body, storyAttachmentText, fileName);
+        return await SendEmailWithAttachmentAsync(email, subject, body, storyAttachmentText, fileName);
     }
 
-    private async Task SendEmailWithAttachmentAsync(
+    private async Task<bool> SendEmailWithAttachmentAsync(
         string to,
         string subject,
         string body,
@@ -107,9 +113,13 @@ public class EmailService : IEmailService
             using var client = new SmtpClient(_emailSettings.SmtpServer, _emailSettings.SmtpPort)
             {
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password),
-                EnableSsl = true
+                EnableSsl = _emailSettings.EnableSsl
             };
+
+            if (!string.IsNullOrWhiteSpace(_emailSettings.Username))
+            {
+                client.Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password);
+            }
 
             using var mailMessage = new MailMessage
             {
@@ -128,10 +138,12 @@ public class EmailService : IEmailService
 
             await client.SendMailAsync(mailMessage);
             _logger.LogInformation("Email with attachment {AttachmentFileName} sent to {Email}", attachmentFileName, to);
+            return true;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to send email with attachment to {Email}", to);
+            return false;
         }
     }
 

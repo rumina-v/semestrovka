@@ -1,6 +1,6 @@
 using DetectiveInterrogation.Data;
+using DetectiveInterrogation.Models.DTOs.Interrogation;
 using DetectiveInterrogation.Models.Entities;
-using DetectiveInterrogation.Models.ViewModels.Interrogation;
 using DetectiveInterrogation.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -52,10 +52,17 @@ public class InterrogationRepository : IInterrogationRepository
         return await _context.Evidence.FindAsync(evidenceId);
     }
 
-    public async Task<SuspectReply?> GetReplyAsync(int suspectId, int phraseId)
+    public async Task<SuspectReply?> GetReplyAsync(int suspectId, int phraseId, int trust, int pressure)
     {
         return await _context.SuspectReplies
-            .FirstOrDefaultAsync(sr => sr.SuspectId == suspectId && sr.PhraseId == phraseId);
+            .Where(sr => sr.SuspectId == suspectId
+                && sr.EvidencePhraseId == phraseId
+                && sr.MinTrust <= trust
+                && sr.MaxTrust >= trust
+                && sr.MinPressure <= pressure
+                && sr.MaxPressure >= pressure)
+            .OrderBy(sr => sr.Id)
+            .FirstOrDefaultAsync();
     }
 
     public async Task<bool> IsEvidenceUsedAsync(int sessionId, int evidenceId)
@@ -72,13 +79,18 @@ public class InterrogationRepository : IInterrogationRepository
             .ToListAsync();
     }
 
-    public async Task<List<AvailablePhraseViewModel>> GetAvailablePhrasesAsync(int suspectId, List<int> usedEvidenceIds)
+    public async Task<List<AvailablePhraseDto>> GetAvailablePhrasesAsync(int suspectId, List<int> usedEvidenceIds)
     {
+        var suspectIdText = suspectId.ToString();
+
         return await _context.EvidencePhrases
             .Where(ep => !usedEvidenceIds.Contains(ep.EvidenceId)
-                && ep.SuspectReplies.Any(sr => sr.SuspectId == suspectId))
+                && (ep.Evidence.SuspectId == suspectIdText
+                    || ep.Evidence.SuspectId.StartsWith(suspectIdText + ",")
+                    || ep.Evidence.SuspectId.EndsWith("," + suspectIdText)
+                    || ep.Evidence.SuspectId.Contains("," + suspectIdText + ",")))
             .Include(ep => ep.Evidence)
-            .Select(ep => new AvailablePhraseViewModel
+            .Select(ep => new AvailablePhraseDto
             {
                 Id = ep.Id,
                 Text = ep.Text,

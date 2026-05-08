@@ -1,8 +1,9 @@
 using DetectiveInterrogation.Helpers;
-using DetectiveInterrogation.Models.Entities;
+using DetectiveInterrogation.Models.DTOs.Case;
 using DetectiveInterrogation.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace DetectiveInterrogation.Controllers;
 
@@ -26,7 +27,7 @@ public class CaseController : ControllerBase
     public async Task<IActionResult> GetAllCases()
     {
         var cases = await _caseService.GetAllCasesAsync();
-        return Ok(cases.Select(ToCaseSummary));
+        return Ok(cases);
     }
 
     [HttpGet("main-newspaper")]
@@ -46,18 +47,18 @@ public class CaseController : ControllerBase
     }
 
     [HttpGet("{caseId}")]
-    public async Task<IActionResult> GetCaseById(int caseId)
+    public async Task<IActionResult> GetCaseById([Range(1, int.MaxValue, ErrorMessage = "CaseId must be positive")] int caseId)
     {
         var caseEntity = await _caseService.GetCaseByIdAsync(caseId);
         if (caseEntity == null)
             return NotFound(new { message = "Case not found" });
 
-        return Ok(ToCaseDetails(caseEntity));
+        return Ok(caseEntity);
     }
 
     [HttpPost]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> CreateCase([FromBody] CreateCaseRequest request)
+    public async Task<IActionResult> CreateCase([FromBody] CreateCaseDto request)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -66,80 +67,6 @@ public class CaseController : ControllerBase
             request.Title, request.NewspaperText, request.ShortDescription, request.FullDescription);
 
         _logger.LogInformation("Case {CaseTitle} created", caseEntity.Title);
-        return CreatedAtAction(nameof(GetCaseById), new { caseId = caseEntity.Id }, ToCaseSummary(caseEntity));
+        return CreatedAtAction(nameof(GetCaseById), new { caseId = caseEntity.Id }, caseEntity);
     }
-
-    private static object ToCaseSummary(Case caseEntity)
-    {
-        return new
-        {
-            caseEntity.Id,
-            caseEntity.Title,
-            caseEntity.NewspaperText,
-            caseEntity.ShortDescription,
-            caseEntity.FullDescription,
-            Suspects = caseEntity.Suspects.Select(s => new
-            {
-                s.Id,
-                s.CaseId,
-                s.Name,
-                s.Description,
-                s.InitialTrust,
-                s.InitialAggression,
-                s.IsGuilty
-            }),
-            Evidence = caseEntity.Evidence.Select(e => new
-            {
-                e.Id,
-                e.CaseId,
-                e.Title,
-                e.ShortText,
-                e.FullText
-            })
-        };
-    }
-
-    private static object ToCaseDetails(Case caseEntity)
-    {
-        return new
-        {
-            caseEntity.Id,
-            caseEntity.Title,
-            caseEntity.NewspaperText,
-            caseEntity.ShortDescription,
-            caseEntity.FullDescription,
-            Suspects = caseEntity.Suspects.Select(s => new
-            {
-                s.Id,
-                s.CaseId,
-                s.Name,
-                s.Description,
-                s.InitialTrust,
-                s.InitialAggression,
-                s.IsGuilty
-            }),
-            Evidence = caseEntity.Evidence.Select(e => new
-            {
-                e.Id,
-                e.CaseId,
-                e.Title,
-                e.ShortText,
-                e.FullText,
-                Phrases = e.Phrases.Select(p => new
-                {
-                    p.Id,
-                    p.EvidenceId,
-                    p.Text
-                })
-            })
-        };
-    }
-}
-
-public class CreateCaseRequest
-{
-    public string Title { get; set; } = string.Empty;
-    public string? NewspaperText { get; set; }
-    public string? ShortDescription { get; set; }
-    public string? FullDescription { get; set; }
 }

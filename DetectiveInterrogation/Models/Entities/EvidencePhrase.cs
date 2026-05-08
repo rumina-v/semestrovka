@@ -8,6 +8,10 @@ public class EvidencePhrase
     
     public string Text { get; set; } = string.Empty;
 
+    public int TrustChange { get; set; }
+
+    public int PressureChange { get; set; }
+
     public Evidence Evidence { get; set; } = null!;
     public ICollection<SuspectReply> SuspectReplies { get; set; } = new List<SuspectReply>();
 }

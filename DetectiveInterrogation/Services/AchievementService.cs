@@ -1,3 +1,4 @@
+using DetectiveInterrogation.Models.DTOs.Achievement;
 using DetectiveInterrogation.Models.Entities;
 using DetectiveInterrogation.Repositories.Interfaces;
 using DetectiveInterrogation.Services.Interfaces;
@@ -13,19 +14,22 @@ public class AchievementService : IAchievementService
         _achievementRepository = achievementRepository;
     }
 
-    public async Task<List<Achievement>> GetAllAchievementsAsync()
+    public async Task<List<AchievementDto>> GetAllAchievementsAsync()
     {
-        return await _achievementRepository.GetAllAsync();
+        var achievements = await _achievementRepository.GetAllAsync();
+        return achievements.Select(ToDto).ToList();
     }
 
-    public async Task<Achievement?> GetAchievementByIdAsync(int achievementId)
+    public async Task<AchievementDto?> GetAchievementByIdAsync(int achievementId)
     {
-        return await _achievementRepository.GetByIdAsync(achievementId);
+        var achievement = await _achievementRepository.GetByIdAsync(achievementId);
+        return achievement == null ? null : ToDto(achievement);
     }
 
-    public async Task<List<Achievement>> GetUserAchievementsAsync(int userId)
+    public async Task<List<AchievementDto>> GetUserAchievementsAsync(int userId)
     {
-        return await _achievementRepository.GetByUserIdAsync(userId);
+        var achievements = await _achievementRepository.GetByUserIdAsync(userId);
+        return achievements.Select(ToDto).ToList();
     }
 
     public async Task<bool> AwardAchievementAsync(int userId, int achievementId)
@@ -46,5 +50,15 @@ public class AchievementService : IAchievementService
     public async Task<bool> HasAchievementAsync(int userId, int achievementId)
     {
         return await _achievementRepository.UserHasAchievementAsync(userId, achievementId);
+    }
+
+    private static AchievementDto ToDto(Achievement achievement)
+    {
+        return new AchievementDto
+        {
+            Id = achievement.Id,
+            Title = achievement.Title,
+            Description = achievement.Description
+        };
     }
 }

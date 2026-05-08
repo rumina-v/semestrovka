@@ -22,6 +22,23 @@ public class CaseConfiguration : IEntityTypeConfiguration<Case>
         
         builder.Property(c => c.FullDescription)
             .IsRequired(false);
+
+        builder.Property(c => c.EndingSuccessText)
+            .IsRequired(false);
+
+        builder.Property(c => c.EndingRefusalText)
+            .IsRequired(false);
+
+        builder.Property(c => c.EndingDefaultText)
+            .IsRequired(false);
+
+        builder.Property(c => c.CourtImagePath)
+            .IsRequired(false)
+            .HasMaxLength(500);
+
+        builder.Property(c => c.PrisonImagePath)
+            .IsRequired(false)
+            .HasMaxLength(500);
         
         builder.HasMany(c => c.Suspects)
             .WithOne(s => s.Case)

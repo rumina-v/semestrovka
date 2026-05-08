@@ -4,69 +4,82 @@ namespace DetectiveInterrogation.Controllers;
 
 public class PageController : Controller
 {
+    private readonly IWebHostEnvironment _environment;
+
+    public PageController(IWebHostEnvironment environment)
+    {
+        _environment = environment;
+    }
+
     [HttpGet("auth/login")]
     public IActionResult Login()
     {
-        return View("~/Views/Auth/Login.cshtml");
+        return HtmlPage("login.html");
     }
 
     [HttpGet("auth/register")]
     public IActionResult Register()
     {
-        return View("~/Views/Auth/Register.cshtml");
+        return HtmlPage("register.html");
     }
 
     [HttpGet("cases")]
     public IActionResult Cases()
     {
-        return View("~/Views/Case/Index.cshtml");
+        return HtmlPage("desk.html");
     }
 
     [HttpGet("desk")]
     public IActionResult Desk()
     {
-        return View("~/Views/Case/Index.cshtml");
+        return HtmlPage("desk.html");
     }
 
     [HttpGet("cases/details")]
     public IActionResult CaseDetails()
     {
-        return View("~/Views/Case/Details.cshtml");
+        return HtmlPage("desk.html");
     }
 
     [HttpGet("interrogation/room")]
     public IActionResult InterrogationRoom()
     {
-        return View("~/Views/Interrogation/Room.cshtml");
+        return HtmlPage("room.html");
     }
 
     [HttpGet("interrogation/result")]
     public IActionResult InterrogationResult()
     {
-        return View("~/Views/Interrogation/Result.cshtml");
+        return HtmlPage("ending.html");
     }
 
     [HttpGet("ending")]
     public IActionResult Ending()
     {
-        return View("~/Views/Interrogation/Result.cshtml");
+        return HtmlPage("ending.html");
     }
 
     [HttpGet("achievements")]
     public IActionResult Achievements()
     {
-        return View("~/Views/Achievement/Index.cshtml");
+        return HtmlPage("profile.html");
     }
 
     [HttpGet("profile")]
     public IActionResult Profile()
     {
-        return View("~/Views/Achievement/Index.cshtml");
+        return HtmlPage("profile.html");
     }
 
     [HttpGet("admin")]
     public IActionResult Admin()
     {
-        return View("~/Views/Admin/Index.cshtml");
+        return HtmlPage("admin.html");
+    }
+
+    private PhysicalFileResult HtmlPage(string fileName)
+    {
+        var path = Path.Combine(_environment.WebRootPath, "pages", fileName);
+        return PhysicalFile(path, "text/html; charset=utf-8");
     }
 }
