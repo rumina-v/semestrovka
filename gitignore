@@ -1,0 +1,43 @@
+# Build
+bin/
+obj/
+Debug/
+Release/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.rsuser
+
+# Logs
+*.log
+Logs/
+
+# Rider
+.idea/
+
+# VS Code
+.vscode/
+
+# ASP.NET Core
+appsettings.Development.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Generated files
+Generated Files/
+
+# NuGet
+*.nupkg
+
+# Temp
+tmp/
+temp/
+
+# Photos / local assets
+photos/
